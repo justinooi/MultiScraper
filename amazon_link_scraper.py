@@ -1,27 +1,28 @@
 from bs4 import BeautifulSoup
 import requests
 from abstract_link_scraper import abstract_link_scraper
+import time
 
 
 class amazon_link_scraper(abstract_link_scraper):
 
     def linkSearch(self):
 
-        URL = "https://www.amazon.com/s?k=" + self.searchParameters
-
-        # Making the HTTP Request
-        webpage = requests.get(URL, headers=self.HEADERS)
-
-        # Creating the Soup Object containing all data
-        soup = BeautifulSoup(webpage.content, "lxml")
-
         # Retrieve all product links
         try:
-            search_results = soup.find_all('a', attrs={'class': 'a-link-normal a-text-normal'})
+            for x in range(1, int(self.pages)+1):
+                URL = "https://www.amazon.com/s?k=" + self.searchParameters + "&page=" + str(x)
+                print(URL)
+                webpage = requests.get(URL, headers=self.HEADERS)
+                soup = BeautifulSoup(webpage.content, "lxml")
+                search_results = soup.find_all('a', attrs={'class': 'a-link-normal a-text-normal'})
 
-            # Loop for extracting links from Tag Objects
-            for link in search_results:
-                self.links_list.append(link.get('href'))
+                # Loop for extracting links from Tag Objects
+                for link in search_results:
+                    self.links_list.append(link.get('href'))
+
+                # Time delay to prevent bot detection
+                time.sleep(1)
 
         except AttributeError:
             links = []
