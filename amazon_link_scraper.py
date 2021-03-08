@@ -2,13 +2,13 @@ from bs4 import BeautifulSoup
 import requests
 from abstract_link_scraper import abstract_link_scraper
 import time
-
+import re
 
 class amazon_link_scraper(abstract_link_scraper):
 
     def linkSearch(self):
 
-        # Retrieve all product links
+        # Retrieve all product ASIN (unique product ID)
         try:
             for x in range(1, int(self.pages)+1):
                 URL = "https://www.amazon.com/s?k=" + self.searchParameters + "&page=" + str(x)
@@ -23,10 +23,8 @@ class amazon_link_scraper(abstract_link_scraper):
                     if '/gp/slredirect/' in link:
                         continue
                     else:
-                        self.links_list.append(link)
-
-                # Time delay to prevent bot detection
-                time.sleep(1)
+                        asin = re.search(r'/[dg]p/([^/]+)', link, flags=re.IGNORECASE).group(1)
+                        self.links_list.append(asin)
 
             self.storeUrl()
 
@@ -42,3 +40,4 @@ class amazon_link_scraper(abstract_link_scraper):
 if __name__ == '__main__':
     ALS = amazon_link_scraper()
     ALS.userInput()
+    ALS.linkSearch()
