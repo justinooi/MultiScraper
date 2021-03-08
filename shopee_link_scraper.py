@@ -34,8 +34,3 @@ class shopee_link_scraper(abstract_link_scraper):
         with open('shopee_urls.txt', 'a') as url_storage:
             for link in self.links_list:
                 url_storage.write(link + '\n')
-
-sls = shopee_link_scraper()
-sls.userInput()
-sls.linkSearch()
-sls.storeUrl()

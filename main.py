@@ -4,7 +4,7 @@ import requests
 
 
 def main(URL):
-    # openning our output file in append mode
+    # opening our output file in append mode
     File = open("out.csv", "a")
     print('Test')
 
