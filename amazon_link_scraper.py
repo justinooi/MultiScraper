@@ -19,15 +19,26 @@ class amazon_link_scraper(abstract_link_scraper):
 
                 # Loop for extracting links from Tag Objects
                 for link in search_results:
-                    self.links_list.append(link.get('href'))
+                    link = link.get('href')
+                    if '/gp/slredirect/' in link:
+                        continue
+                    else:
+                        self.links_list.append(link)
 
                 # Time delay to prevent bot detection
                 time.sleep(1)
+
+            self.storeUrl()
 
         except AttributeError:
             links = []
 
     def storeUrl(self):
-        with open('amazon_urls.txt', 'a') as url_storage:
+        with open('test.txt', 'a') as url_storage:
             for link in self.links_list:
                 url_storage.write(link + '\n')
+
+
+if __name__ == '__main__':
+    ALS = amazon_link_scraper()
+    ALS.userInput()
