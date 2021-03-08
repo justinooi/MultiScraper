@@ -23,8 +23,7 @@ def main(URL):
     # retreiving product title
     try:
         # Outer Tag Object
-        title = soup.find("span",
-                          attrs={"id": 'productTitle'})
+        title = soup.find("span",attrs={"id": 'productTitle'})
 
         # Inner NavigableString Object
         title_value = title.string
@@ -87,7 +86,17 @@ def main(URL):
     print("Availability = ", available)
 
     # saving the availibility and closing the line
-    File.write(f"{available},\n")
+    File.write(f"{available},")
+
+    # retrieve all reviews url
+    try:
+        review_url = soup.find("a", class_="a-link-emphasis a-text-bold")['href']
+        print("Review URL = ", review_url)
+
+    except AttributeError:
+        review_url = "NA"
+
+    File.write(f"{review_url},\n")
 
     # closing the file
     File.close()
