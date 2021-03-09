@@ -1,10 +1,8 @@
 import requests
-import time
 import csv
 import re
 from requests_html import AsyncHTMLSession
 from abstract_product_scraper import abstract_product_scraper
-from bs4 import BeautifulSoup
 
 class shopee_product_scraper(abstract_product_scraper):
 
@@ -26,6 +24,20 @@ class shopee_product_scraper(abstract_product_scraper):
         print("Commencing asynchronous requests")
         print("Number of requesting processes set to 5")
 
+        # If not multiple of 5s, add empty links that will not be processed by lambda function.
+        remainder = len(self.links) % 5
+        if remainder == 1:
+            for i in range(4):
+                self.links.append('IGNORE')
+        if remainder == 2:
+            for i in range(3):
+                self.links.append('IGNORE')
+        if remainder == 3:
+            for i in range(2):
+                self.links.append('IGNORE')
+        if remainder == 4:
+            self.links.append('IGNORE')
+
         for i in range(0, len(self.links), NUMBER_OF_LAMBDA_FUNCTIONS):
             self.results.append(asession.run(  # Calls 5 requests (PROCESSES) in 1 go
                 lambda: self.get_product_details(self.links[i], asession),
@@ -44,6 +56,9 @@ class shopee_product_scraper(abstract_product_scraper):
         items = [None] * 6
         items[0] = links
         url = 'http://shopee.sg/load-i.' + links
+
+        if 'IGNORE' in url:
+            return ['IGNORE']
 
         webpage = await asession.get(url, headers=self.HEADERS)
         await webpage.html.arender(sleep=1, timeout=50)
