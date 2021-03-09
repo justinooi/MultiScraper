@@ -1,4 +1,4 @@
-from abc import ABC, abstractclassmethod
+from abc import ABC, abstractmethod
 
 class abstract_product_scraper(ABC):
     HEADERS = ({'User-Agent':
@@ -6,14 +6,18 @@ class abstract_product_scraper(ABC):
                     "Safari/537.36",
                 'Accept-Language': 'en-US, en;q=0.5'})
 
+    @abstractmethod
     def get_product_links(self):
         pass
 
+    @abstractmethod
     def asynchronousProcessing(self):
         pass
 
+    @abstractmethod
     async def get_product_details(self, links, asession):
         pass
 
+    @abstractmethod
     def store_product_details(self):
         pass
