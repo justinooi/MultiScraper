@@ -12,5 +12,8 @@ class abstract_product_scraper(ABC):
     def asynchronousProcessing(self):
         pass
 
-    async def get_product_details(self):
+    async def get_product_details(self, links, asession):
+        pass
+
+    def store_product_details(self):
         pass
