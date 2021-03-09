@@ -31,6 +31,7 @@ class amazon_product_scraper(abstract_product_scraper):
                 lambda: self.get_product_details(self.links[i + 3], asession),
                 lambda: self.get_product_details(self.links[i + 4], asession),
             ))
+            print("Scraping ", i + NUMBER_OF_LAMBDA_FUNCTIONS, "/", len(self.links))
         for i in range(len(self.results)):
             for j in range(len(self.results[0])):
                 self.attributes.append(self.results[i][j])
@@ -55,19 +56,14 @@ class amazon_product_scraper(abstract_product_scraper):
         # Get Product Price
         try:
             items[2] = soup.find("span", attrs={'id': 'priceblock_ourprice'}).string.strip().replace(',', '')
-        # we are omitting unnecessary spaces
-        # and commas form our string
         except AttributeError:
             items[2] = 'N/A'
 
         # Get Product Rating
-
         try:
             items[3] = soup.find("i", attrs={
                 'class': 'a-icon a-icon-star a-star-4-5'}).string.strip().replace(',', '')
-
         except AttributeError:
-
             try:
                 items[3] = soup.find(
                     "span", attrs={'class': 'a-icon-alt'}).string.strip().replace(',', '')
@@ -75,20 +71,16 @@ class amazon_product_scraper(abstract_product_scraper):
                 items[3] = "N/A"
 
         # Get Product Review Count
-
         try:
             items[4] = soup.find(
                 "span", attrs={'id': 'acrCustomerReviewText'}).string.strip().replace(',', '')
-
         except AttributeError:
             items[4] = "N/A"
 
         # Get Product Availability
-
         try:
             available = soup.find("div", attrs={'id': 'availability'})
             items[5] = available.find("span").string.strip().replace(',', '')
-
         except AttributeError:
             items[5] = "N/A"
 
