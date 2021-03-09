@@ -1,4 +1,3 @@
-import requests
 import csv
 from requests_html import AsyncHTMLSession
 from abstract_product_scraper import abstract_product_scraper
