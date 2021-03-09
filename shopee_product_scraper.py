@@ -19,7 +19,7 @@ class shopee_product_scraper(abstract_product_scraper):
             self.links = file_reader.read().splitlines()
 
     def asynchronousProcessing(self):
-        NUMBER_OF_LAMBDA_FUNCTIONS = 5
+        NUMBER_OF_LAMBDA_FUNCTIONS = 10
         asession = AsyncHTMLSession()
         print("Commencing asynchronous requests")
         print("Number of requesting processes set to 5")
@@ -27,24 +27,44 @@ class shopee_product_scraper(abstract_product_scraper):
         # If not multiple of 5s, add empty links that will not be processed by lambda function.
         remainder = len(self.links) % 5
         if remainder == 1:
-            for i in range(4):
+            for i in range(9):
                 self.links.append('IGNORE')
         if remainder == 2:
-            for i in range(3):
+            for i in range(8):
                 self.links.append('IGNORE')
         if remainder == 3:
-            for i in range(2):
+            for i in range(7):
                 self.links.append('IGNORE')
         if remainder == 4:
+            for i in range(6):
+                self.links.append('IGNORE')
+        if remainder == 5:
+            for i in range(5):
+                self.links.append('IGNORE')
+        if remainder == 6:
+            for i in range(4):
+                self.links.append('IGNORE')
+        if remainder == 7:
+            for i in range(3):
+                self.links.append('IGNORE')
+        if remainder == 8:
+            for i in range(2):
+                self.links.append('IGNORE')
+        if remainder == 9:
             self.links.append('IGNORE')
 
         for i in range(0, len(self.links), NUMBER_OF_LAMBDA_FUNCTIONS):
-            self.results.append(asession.run(  # Calls 5 requests (PROCESSES) in 1 go
+            self.results.append(asession.run(  # Calls 10 requests (PROCESSES) in 1 go
                 lambda: self.get_product_details(self.links[i], asession),
                 lambda: self.get_product_details(self.links[i + 1], asession),
                 lambda: self.get_product_details(self.links[i + 2], asession),
                 lambda: self.get_product_details(self.links[i + 3], asession),
                 lambda: self.get_product_details(self.links[i + 4], asession),
+                lambda: self.get_product_details(self.links[i + 5], asession),
+                lambda: self.get_product_details(self.links[i + 6], asession),
+                lambda: self.get_product_details(self.links[i + 7], asession),
+                lambda: self.get_product_details(self.links[i + 8], asession),
+                lambda: self.get_product_details(self.links[i + 9], asession),
             ))
             print("Scraping ", i + NUMBER_OF_LAMBDA_FUNCTIONS, "/", len(self.links))
         for i in range(len(self.results)):
@@ -91,3 +111,9 @@ class shopee_product_scraper(abstract_product_scraper):
         with open('output-shopee.csv', 'w', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
             writer.writerows(self.attributes)
+
+if __name__ == '__main__':
+    sps = shopee_product_scraper('shopee_urls.txt')
+    sps.get_product_links()
+    sps.asynchronousProcessing()
+    sps.store_product_details()
