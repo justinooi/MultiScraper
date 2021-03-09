@@ -72,7 +72,7 @@ class amazon_product_scraper(abstract_product_scraper):
                 items[3] = soup.find(
                     "span", attrs={'class': 'a-icon-alt'}).string.strip().replace(',', '')
             except:
-                items[3] = "NA"
+                items[3] = "N/A"
 
         # Get Product Review Count
 
@@ -81,7 +81,7 @@ class amazon_product_scraper(abstract_product_scraper):
                 "span", attrs={'id': 'acrCustomerReviewText'}).string.strip().replace(',', '')
 
         except AttributeError:
-            items[4] = "NA"
+            items[4] = "N/A"
 
         # Get Product Availability
 
@@ -90,7 +90,7 @@ class amazon_product_scraper(abstract_product_scraper):
             items[5] = available.find("span").string.strip().replace(',', '')
 
         except AttributeError:
-            items[5] = "NA"
+            items[5] = "N/A"
 
         return tuple(items)
 
@@ -98,12 +98,3 @@ class amazon_product_scraper(abstract_product_scraper):
         with open('output-amazon.csv', 'w', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
             writer.writerows(self.attributes)
-
-if __name__ == '__main__':
-    time_start = time.time()
-    aps = amazon_product_scraper('test.txt')
-    aps.get_product_links()
-    aps.asynchronousProcessing()
-    aps.store_product_details()
-    time_end = time.time() - time_start
-    print(time_end)
