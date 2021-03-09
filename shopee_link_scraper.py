@@ -28,8 +28,7 @@ class shopee_link_scraper(abstract_link_scraper):
 
     def storeUrl(self):
         for x in range(len(self.identificationParams)):
-            self.links_list.append("http://shopee.sg/load-i." + str(self.identificationParams[x][0]) + '.' + str(
-                self.identificationParams[x][1]))
+            self.links_list.append(str(self.identificationParams[x][0]) + '.' + str(self.identificationParams[x][1]))
         print("Links created")
         with open('shopee_urls.txt', 'a') as url_storage:
             for link in self.links_list:
