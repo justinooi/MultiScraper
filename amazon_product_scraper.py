@@ -79,10 +79,14 @@ class amazon_product_scraper(abstract_product_scraper):
         try:
             items[3] = soup.find("i", attrs={
                 'class': 'a-icon a-icon-star a-star-4-5'}).string.strip().replace(',', '')
+            if 'Previous page of related Sponsored Products' in items[3]:
+                items[3] = 'N/A'
         except AttributeError:
             try:
                 items[3] = soup.find(
                     "span", attrs={'class': 'a-icon-alt'}).string.strip().replace(',', '')
+                if 'Previous page of related Sponsored Products' in items[3]:
+                    items[3] = 'N/A'
             except:
                 items[3] = "N/A"
 
