@@ -1,5 +1,6 @@
 import requests
 import csv
+import time
 import re
 from requests_html import AsyncHTMLSession
 from abstract_product_scraper import abstract_product_scraper
@@ -22,7 +23,7 @@ class shopee_product_scraper(abstract_product_scraper):
         NUMBER_OF_LAMBDA_FUNCTIONS = 10
         asession = AsyncHTMLSession()
         print("Commencing asynchronous requests")
-        print("Number of requesting processes set to 5")
+        print("Number of requesting processes set to 10")
 
         # If not multiple of 5s, add empty links that will not be processed by lambda function.
         remainder = len(self.links) % 5
@@ -108,12 +109,9 @@ class shopee_product_scraper(abstract_product_scraper):
         return tuple(items)
 
     def store_product_details(self):
-        with open('output-shopee.csv', 'w', newline='', encoding='utf-8') as f:
+        file_name = 'shopee_scrape' + str(time.time()) + '.csv'
+        with open(file_name, 'w', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
             writer.writerows(self.attributes)
 
-if __name__ == '__main__':
-    sps = shopee_product_scraper('shopee_urls.txt')
-    sps.get_product_links()
-    sps.asynchronousProcessing()
-    sps.store_product_details()
+        return file_name
