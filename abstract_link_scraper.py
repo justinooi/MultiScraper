@@ -1,7 +1,4 @@
-from bs4 import BeautifulSoup
-import requests
 from abc import ABC, abstractclassmethod
-
 
 # Abstract class for scraping links
 class abstract_link_scraper(ABC):
