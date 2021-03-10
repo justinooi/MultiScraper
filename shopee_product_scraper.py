@@ -109,7 +109,7 @@ class shopee_product_scraper(abstract_product_scraper):
         return tuple(items)
 
     def store_product_details(self):
-        file_name = 'shopee_scrape' + str(time.time()) + '.csv'
+        file_name = 'shopee-scrape-' + str(time.time()) + '.csv'
         with open(file_name, 'w', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
             writer.writerows(self.attributes)

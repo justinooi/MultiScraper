@@ -2,6 +2,7 @@ import csv
 from requests_html import AsyncHTMLSession
 from abstract_product_scraper import abstract_product_scraper
 from bs4 import BeautifulSoup
+import time
 
 class amazon_product_scraper(abstract_product_scraper):
 
@@ -106,6 +107,7 @@ class amazon_product_scraper(abstract_product_scraper):
         return tuple(items)
 
     def store_product_details(self):
-        with open('output-amazon.csv', 'w', newline='', encoding='utf-8') as f:
+        file_name = 'output-amazon-' + str(time.time()) + '.csv'
+        with open(file_name, 'w', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
             writer.writerows(self.attributes)
