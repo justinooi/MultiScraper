@@ -32,7 +32,7 @@ class amazon_link_scraper(abstract_link_scraper):
             links = []
 
     def storeUrl(self):
-        with open('amazon_urls.txt', 'a') as url_storage:
+        with open('amazon_urls.txt', 'w') as url_storage:
             for link in self.links_list:
                 url_storage.write(link + '\n')
         return 'amazon_urls.txt'
