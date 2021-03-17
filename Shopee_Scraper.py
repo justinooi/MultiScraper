@@ -7,8 +7,8 @@ class Shopee_Scraper(shopee_product_scraper, shopee_link_scraper, shopee_review_
     def __init__(self):
         self.scraper = 'Shopee'
 
-    def linkScrape(self):
-        super().userInput()
+    def linkScrape(self, searchParameter):
+        super().userInput(searchParameter)
         super().linkSearch()
         return super().storeUrl()
 
