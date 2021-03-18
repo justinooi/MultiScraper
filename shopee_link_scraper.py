@@ -18,7 +18,6 @@ class shopee_link_scraper(abstract_link_scraper):
             r = requests.get(url, headers=self.HEADERS).json()
             for item in r['items']:  # Store name, price, stocks left and amount sold in respective lists
                 self.identificationParams.append((item['shopid'], item['itemid']))
-            self.items_per_page += 50
         except AttributeError:
             self.identificationParams = []
 
