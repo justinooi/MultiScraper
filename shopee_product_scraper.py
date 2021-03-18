@@ -74,7 +74,7 @@ class shopee_product_scraper(abstract_product_scraper):
 
     async def get_product_details(self, links, asession):
 
-        items = [None] * 6
+        items = [0] * 6
         items[0] = links #Sets column 0 to links
         url = 'http://shopee.sg/load-i.' + links
 
@@ -84,23 +84,41 @@ class shopee_product_scraper(abstract_product_scraper):
         webpage = await asession.get(url, headers=self.HEADERS)
         await webpage.html.arender(sleep=2, timeout=50, scrolldown=True)
 
-        for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[1]/span'):
-            items[1] = item.text.replace(",", "")
-        for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[3]/div/div/div/div/div/div[1]'):
-            items[2] = item.text
-        for item in webpage.html.xpath('/html/body/div[1]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[2]/div[1]/div[1]'):
-            items[3] = item.text
-        for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[2]/div[2]/div[1]'):
-            items[4] = item.text
-        for item in webpage.html.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "aPKXeO", " " )) and (((count(preceding-sibling::*) + 1) = 3) and parent::*)]//div'):
-            items[5] = re.sub('\D', '', str(item.text))
-        if items[5] is None:
-            for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[3]/div[2]/div[1]/div[1]/div[1]/div[2]/div[3]/div'):
+        try:
+            for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[1]/span'):
+                items[1] = item.text.replace(",", "")
+        except:
+            pass
+
+        try:
+            for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[3]/div/div/div/div/div[2]/div[1]'):
+                items[2] = item.text.replace(",", "")
+        except:
+            pass
+
+
+        try:
+            for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[2]/div[1]/div[1]'):
+                items[3] = item.text
+        except:
+            pass
+
+
+        try:
+            for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[2]/div[2]/div[1]'):
+                items[4] = item.text
+        except:
+            pass
+
+        try:
+            for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[4]/div/div[3]/div/div[2]/div[2]/div[2]'):
                 items[5] = re.sub('\D', '', str(item.text))
+        except:
+            pass
 
         if items[1] is None:  # When GET fails
             items[1] = "FAILED TO GET"
-        if items[2] is None:
+        if items[2]==0:
             items[2] = "FAILED TO GET"
         if items[3] is None:
             items[3] = "0"

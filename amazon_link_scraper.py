@@ -10,21 +10,28 @@ class amazon_link_scraper(abstract_link_scraper):
 
         # Retrieve all product ASIN (unique product ID)
         try:
-            for x in range(1, int(self.pages)+1):
+            for x in range(1):
                 URL = "https://www.amazon.com/s?k=" + self.searchParameters + "&page=" + str(x)
                 print(URL)
                 webpage = requests.get(URL, headers=self.HEADERS)
                 soup = BeautifulSoup(webpage.content, "lxml")
                 search_results = soup.find_all('a', attrs={'class': 'a-link-normal a-text-normal'})
+                counter = 0
 
                 # Loop for extracting links from Tag Objects
                 for link in search_results:
                     link = link.get('href')
+
                     if '/gp/slredirect/' in link:
                         continue
                     else:
                         asin = re.search(r'/[dg]p/([^/]+)', link, flags=re.IGNORECASE).group(1)
                         self.links_list.append(asin)
+                    counter=counter+1
+                    if counter == self.itemQuantity:
+                        break
+
+
 
             self.storeUrl()
 

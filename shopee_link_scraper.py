@@ -11,13 +11,14 @@ class shopee_link_scraper(abstract_link_scraper):
     def linkSearch(self):
 
         try:
-            for x in range(int(self.pages)):
-                url = 'https://shopee.sg/api/v2/search_items/?by=relevancy&keyword=' + self.searchParameters + '&limit=50&newest=' + str(
-                    self.items_per_page) + '&order=desc&page_type=search'  # Base URL
-                r = requests.get(url, headers=self.HEADERS).json()
-                for item in r['items']:  # Store name, price, stocks left and amount sold in respective lists
-                    self.identificationParams.append((item['shopid'], item['itemid']))
-                self.items_per_page += 50
+            url = 'https://shopee.sg/api/v2/search_items/?by=relevancy&keyword=' + self.searchParameters + '&limit=' + str(
+                self.itemQuantity) + '&newest=' + str(
+                self.items_per_page) + '&order=desc&page_type=search'  # Base URL
+            print(url)
+            r = requests.get(url, headers=self.HEADERS).json()
+            for item in r['items']:  # Store name, price, stocks left and amount sold in respective lists
+                self.identificationParams.append((item['shopid'], item['itemid']))
+            self.items_per_page += 50
         except AttributeError:
             self.identificationParams = []
 
