@@ -59,7 +59,10 @@ class amazon_product_scraper(abstract_product_scraper):
             return ['IGNORE']
 
         webpage = await asession.get(url, headers=self.HEADERS)
-        await webpage.html.arender(sleep=1, timeout=50)
+        try:
+            await webpage.html.arender(sleep=2, timeout=30)
+        except:
+            pass
         soup = BeautifulSoup(webpage.content, "lxml")
 
         # Get Product Title
