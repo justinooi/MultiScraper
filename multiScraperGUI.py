@@ -132,7 +132,12 @@ class multiScraperGUI:
         warningMsg.config(font=("MS Sans Serif", 40))
         warningMsg.place(relx=0, rely=0.3, relheight=0.2, relwidth=1)
 
-
+        
+        reviewButton = Button(callScrapeFrame, text="Review Data",
+                            command=lambda: [callScrapeFrame.place_forget(), self.productDetailsPage(mainGUI)])
+        reviewButton.config(font=("Arial", 30))
+        reviewButton.place(relx=0.25, rely=0.80, relheight=0.1, relwidth=0.5)
+        
         if checked_shopee == 1:
             url = Shopee_Scraper().linkScrape(search_parameter.get(),itemQuantity)
             Shopee_Scraper().productScrape(url)
@@ -141,17 +146,7 @@ class multiScraperGUI:
             url = Amazon_Scraper().linkScrape(search_parameter.get(),itemQuantity)
             Amazon_Scraper().productScrape(url)
 
-            # process = threading.Thread(target=lambda: SS.linkScrape(search_parameter.get()))
-            # process.start()
-            # time.sleep(1)
         print("Done")
-
-            # process = threading.Thread(target=lambda q, arg1: q.put(SS.linkScrape(arg1), args=(que, search_parameter.get())))
-
-        reviewButton = Button(callScrapeFrame, text="Review Data",
-                            command=lambda: [callScrapeFrame.place_forget(), self.productDetailsPage(mainGUI)])
-        reviewButton.config(font=("Arial", 30))
-        reviewButton.place(relx=0.25, rely=0.80, relheight=0.1, relwidth=0.5)
 
 
     def productDetailsPage(self, mainGUI):
