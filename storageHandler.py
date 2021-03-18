@@ -113,14 +113,16 @@ class storageHandler:
         duplicate_flag = False
 
         if savedItem == "":
-            print("?")
             return 0
 
-        with open('savedItems.csv', 'r', newline='',
+        try:
+            with open('savedItems.csv', 'r', newline='',
                   encoding='utf-8') as savedItemsIO:
-            for row in savedItemsIO:
-                if '"\r\n' not in row:
-                    duplicate_detection.append(row)
+                for row in savedItemsIO:
+                    if '"\r\n' not in row:
+                        duplicate_detection.append(row)
+        except:
+            pass
 
         for x in range(len(duplicate_detection)):
             try:
@@ -132,19 +134,21 @@ class storageHandler:
         if duplicate_flag == False:
             with open('savedItems.csv', 'a', newline='', encoding='utf-8') as f:
                 writer = csv.writer(f)
-                writer.writerow(savedItem.replace('\n',''))
+                writer.writerow(savedItem)
 
         else:
             ctypes.windll.user32.MessageBoxW(0, "You've already saved this item", "", 1)
 
     def showFavourites(self, itemList):
         savedItem = []
-        with open('savedItems.csv', 'r', newline='',
+        try:
+            with open('savedItems.csv', 'r', newline='',
                   encoding='utf-8') as savedItemsIO:
-            for row in savedItemsIO:
-                if '"\r\n' not in row:
-                    savedItem.append(row.split(","))
-
+                for row in savedItemsIO:
+                    if '"\r\n' not in row:
+                        savedItem.append(row.split(","))
+        except:
+            pass
         for i, column in enumerate(savedItem, start=0):
             itemList.insert("", 0, values=(savedItem[i]))
 
