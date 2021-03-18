@@ -5,11 +5,18 @@ import requests
 
 
 class shopee_link_scraper(abstract_link_scraper):
+    """This class inherits methods from its superclass
+    
+    Args:
+        absract_link_scraper (superclass): Methods from superclass are being inherited by this class 
+    """
     identificationParams = []
     items_per_page = 50
 
     def linkSearch(self):
-
+        """This function requests and gathers shop and item IDs from Shopee. They are stored into the identificationParams parameter.
+        
+        """
         try:
             url = 'https://shopee.sg/api/v2/search_items/?by=relevancy&keyword=' + self.searchParameters + '&limit=' + str(
                 self.itemQuantity) + '&newest=' + str(
@@ -22,7 +29,12 @@ class shopee_link_scraper(abstract_link_scraper):
             self.identificationParams = []
 
     def storeUrl(self):
+        """This function opens a txt file, writes the shop and item IDs and saves it into the current directory
 
+        Returns:
+            String : 'shopee_urls.txt'
+        
+        """
         for x in range(len(self.identificationParams)):
             self.links_list.append(str(self.identificationParams[x][0]) + '.' + str(self.identificationParams[x][1]))
         print("Links created")
