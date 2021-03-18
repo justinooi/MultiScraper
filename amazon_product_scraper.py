@@ -107,7 +107,7 @@ class amazon_product_scraper(abstract_product_scraper):
         return tuple(items)
 
     def store_product_details(self):
-        file_name = 'output-amazon-' + str(time.time()) + '.csv'
+        file_name = 'output-amazon.csv'
         with open(file_name, 'w', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
             writer.writerows(self.attributes)

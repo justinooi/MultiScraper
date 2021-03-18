@@ -75,25 +75,28 @@ class shopee_product_scraper(abstract_product_scraper):
     async def get_product_details(self, links, asession):
 
         items = [None] * 6
-        items[0] = links
+        items[0] = links #Sets column 0 to links
         url = 'http://shopee.sg/load-i.' + links
 
         if 'IGNORE' in url:
             return ['IGNORE']
 
         webpage = await asession.get(url, headers=self.HEADERS)
-        await webpage.html.arender(sleep=1, timeout=50)
+        await webpage.html.arender(sleep=2, timeout=50, scrolldown=True)
 
-        for item in webpage.html.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "_3ZV7fL", " " ))]//span'):
+        for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[1]/span'):
             items[1] = item.text.replace(",", "")
-        for item in webpage.html.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "AJyN7v", " " ))]'):
+        for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[3]/div/div/div/div/div/div[1]'):
             items[2] = item.text
-        for item in webpage.html.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "_22cC7R", " " ))]'):
+        for item in webpage.html.xpath('/html/body/div[1]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[2]/div[1]/div[1]'):
             items[3] = item.text
-        for item in webpage.html.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "_3WXigY", ''" " ))]'):
+        for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[2]/div[2]/div[1]'):
             items[4] = item.text
-        for item in webpage.html.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "flex items-center _2_ItKR", ''" " ))]'):
+        for item in webpage.html.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "aPKXeO", " " )) and (((count(preceding-sibling::*) + 1) = 3) and parent::*)]//div'):
             items[5] = re.sub('\D', '', str(item.text))
+        if items[5] is None:
+            for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[3]/div[2]/div[1]/div[1]/div[1]/div[2]/div[3]/div'):
+                items[5] = re.sub('\D', '', str(item.text))
 
         if items[1] is None:  # When GET fails
             items[1] = "FAILED TO GET"
@@ -109,7 +112,8 @@ class shopee_product_scraper(abstract_product_scraper):
         return tuple(items)
 
     def store_product_details(self):
-        file_name = 'shopee-scrape-' + str(time.time()) + '.csv'
+        #file_name = 'shopee-scrape-' + str(time.time()) + '.csv'
+        file_name = 'shopee-scrape.csv'
         with open(file_name, 'w', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
             writer.writerows(self.attributes)
