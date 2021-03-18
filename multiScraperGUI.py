@@ -96,11 +96,22 @@ class multiScraperGUI:
 
         # submit button
         submitButton = Button(crawlerFrame, text="Submit", command=lambda: [
-            [crawlerFrame.place_forget(),self.callScrape(mainGUI, search_parameter, checked_amazon.get(), checked_shopee.get())] if (checked_shopee.get() == 1 or checked_amazon.get() == 1) and search_parameter.get() != "" else [
-                invalidMsg.place(relx=0, rely=0.5, relheight=0.1, relwidth=1)]])
+            [crawlerFrame.place_forget(),self.callScrape(mainGUI, search_parameter, checked_amazon.get(), checked_shopee.get(), itemQuantityScroller.get())] if (checked_shopee.get() == 1 or checked_amazon.get() == 1) and search_parameter.get() != "" else [
+                invalidMsg.place(relx=0.7, rely=0.2, relheight=0.1, relwidth=0.3)]])
 
         submitButton.config(font=("Arial", 25))
-        submitButton.place(relx=0.35, rely=0.35, relheight=0.1, relwidth=0.3)
+        submitButton.place(relx=0.35, rely=0.69, relheight=0.1, relwidth=0.3)
+
+        #Item quantity scroller
+        itemQuantityScroller = Scale(crawlerFrame, from_=10, to=50, orient=HORIZONTAL, resolution = 10)
+        itemQuantityScroller.place(relx=0.35, rely=0.45, relheight=0.07, relwidth=0.3)
+
+        #Item quantity scroller description
+        itemQuantityScrollerDesc = tkinter.Label(crawlerFrame,
+                                   text="Number of products to scrape from each website",
+                                   bg=self.mainBackground)
+        itemQuantityScrollerDesc.config(font=("MS Sans Serif", 15))
+        itemQuantityScrollerDesc.place(relx=0.3, rely=0.40, relheight=0.05, relwidth=0.35)
 
         # back button
         backButton = Button(crawlerFrame, text="Back",
@@ -108,7 +119,8 @@ class multiScraperGUI:
         backButton.config(font=("Arial", 30))
         backButton.place(relx=0.25, rely=0.80, relheight=0.1, relwidth=0.5)
 
-    def callScrape(self, mainGUI, search_parameter, checked_amazon, checked_shopee):
+    def callScrape(self, mainGUI, search_parameter, checked_amazon, checked_shopee, itemQuantity):
+        csvSorter().deleteFiles()
         callScrapeFrame = tkinter.Frame(mainGUI, bg=self.mainBackground)
         callScrapeFrame.place(relx=0, rely=0, relheight=1, relwidth=1)
 
@@ -118,12 +130,13 @@ class multiScraperGUI:
         warningMsg.config(font=("MS Sans Serif", 40))
         warningMsg.place(relx=0, rely=0.3, relheight=0.2, relwidth=1)
 
+
         if checked_shopee == 1:
-            url = Shopee_Scraper().linkScrape(search_parameter.get())
+            url = Shopee_Scraper().linkScrape(search_parameter.get(),itemQuantity)
             Shopee_Scraper().productScrape(url)
 
         if checked_amazon == 1:
-            url = Amazon_Scraper().linkScrape(search_parameter.get())
+            url = Amazon_Scraper().linkScrape(search_parameter.get(),itemQuantity)
             Amazon_Scraper().productScrape(url)
 
             # process = threading.Thread(target=lambda: SS.linkScrape(search_parameter.get()))
@@ -209,7 +222,7 @@ class multiScraperGUI:
         saveButton.place(relx=0.7, rely=0.66, relheight=0.05, relwidth=0.2)
 
         #check Review Button
-        saveButton = Button(productDetailsFrame, text="Check reviews (work in progress)", command=lambda: [])
+        saveButton = Button(productDetailsFrame, text="Check reviews", command=lambda: [productDetailsFrame.place_forget(),self.reviewsPage(mainGUI)])
         saveButton.config(font=("Arial", 15))
         saveButton.place(relx=0.7, rely=0.72, relheight=0.05, relwidth=0.25)
 
@@ -259,6 +272,38 @@ class multiScraperGUI:
         deleteAllButton.config(font=("Arial", 30))
         deleteAllButton.place(relx=0.37, rely=0.7, relheight=0.1, relwidth=0.25)
 
+    def reviewsPage(self, mainGUI):
+        reviewsFrame = tkinter.Frame(mainGUI, bg=self.mainBackground)
+        reviewsFrame.place(relx=0, rely=0, relheight=1, relwidth=1)
+
+        title = tkinter.Label(reviewsFrame,
+                              text="Reviews",
+                              bg=self.mainBackground)
+        title.config(font=("MS Sans Serif", 40))
+        title.place(relx=0, rely=0, relheight=0.1, relwidth=1)
+
+        item_column = ('Rating','Review')
+        itemList = ttk.Treeview(reviewsFrame,columns=item_column,show='headings')
+        for i in range(len(item_column)):
+            itemList.heading(item_column[i], text=item_column[i])
+
+        itemList.column(item_column[0], anchor="w", width=30)
+        itemList.column(item_column[1], anchor="w", width=1200)
+
+        itemList.place(relx=0,rely=0.1, relheight=0.5, relwidth=1)
+
+
+
+
+        #Back Button
+        reviewButton = Button(reviewsFrame, text="Back", command=lambda: [reviewsFrame.place_forget(),self.productDetailsPage(mainGUI)])
+        reviewButton.config(font=("Arial", 30))
+        reviewButton.place(relx=0.2, rely=0.85, relheight=0.1, relwidth=0.25)
+
+        #Sentiment Analysis Button
+        reviewButton = Button(reviewsFrame, text="Sentiment Analysis", command=lambda: [])
+        reviewButton.config(font=("Arial", 30))
+        reviewButton.place(relx=0.6, rely=0.85, relheight=0.1, relwidth=0.3)
 
 main_GUI = multiScraperGUI()
 main_GUI.initialization()

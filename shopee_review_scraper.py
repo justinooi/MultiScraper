@@ -14,8 +14,6 @@ class shopee_review_scraper:
     def asynchronousProcessing(self):
         NUMBER_OF_LAMBDA_FUNCTIONS = 5
         asession = AsyncHTMLSession()
-        print("Commencing asynchronous requests")
-        print("Number of requesting processes set to 5")
 
         asession.run(  # Calls 5 requests (PROCESSES) in 1 go
             lambda: self.get_product_reviews(self.link, asession, 5),
@@ -49,12 +47,12 @@ class shopee_review_scraper:
                 self.reviews[rating - 1].append(review_str)
 
     def store_product_reviews(self):
-        file_name = str(self.link + '.csv')
-        fieldnames = ['Rating', 'Review']
-        with open(file_name, 'a', encoding="utf-8", newline='') as filewriter:
+        file_name = str('reviews/'+self.link + '.csv')
+        fieldnames = ['Rating', 'Reviews']
+        with open(file_name, 'w', encoding="utf-8", newline='') as filewriter:
             writer = csv.DictWriter(filewriter, fieldnames=fieldnames)
             writer.writeheader()
             for i in range(len(self.reviews)):
                 for j in range(len(self.reviews[i])):
-                    writer.writerow({'Rating': str(i+1), 'Review': str(self.reviews[i][j])})
+                    writer.writerow({'Rating': str(i+1), 'Reviews': str(self.reviews[i][j]).replace('\n',"")})
         print("Review scrape completed for " + str(self.link) + " saved as " + file_name)

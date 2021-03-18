@@ -56,7 +56,7 @@ class csvSorter:
         self.items.sort(key=lambda x: float(x[3]), reverse=False)
 
     def sortByRatingQuantity(self):
-        self.items.sort(key=lambda x: str(x[4]), reverse=False)
+        self.items.sort(key=lambda x: float(x[4]), reverse=False)
 
 
     def sortByQuantityLeft(self):
@@ -121,7 +121,7 @@ class csvSorter:
         if duplicate_flag == False:
             with open('savedItems.csv', 'a', newline='', encoding='utf-8') as f:
                 writer = csv.writer(f)
-                writer.writerow(savedItem)
+                writer.writerow(savedItem.replace('\n',''))
 
         else:
             ctypes.windll.user32.MessageBoxW(0, "You've already saved this item", "", 1)
@@ -141,6 +141,13 @@ class csvSorter:
         with open('savedItems.csv', 'w', newline='', encoding='utf-8') as f:
             pass
         itemList.delete(*itemList.get_children())
+
+    def deleteFiles(self):
+        with open('output-amazon.csv', 'w', newline='', encoding='utf-8') as f:
+            pass
+        with open('shopee-scrape.csv', 'w', newline='', encoding='utf-8') as f:
+            pass
+
 
 
 

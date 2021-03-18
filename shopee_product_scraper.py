@@ -100,7 +100,7 @@ class shopee_product_scraper(abstract_product_scraper):
 
         if items[1] is None:  # When GET fails
             items[1] = "FAILED TO GET"
-        if items[2] is None:
+        if items[2] is "":
             items[2] = "FAILED TO GET"
         if items[3] is None:
             items[3] = "0"

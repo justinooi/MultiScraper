@@ -16,8 +16,6 @@ class amazon_review_scraper:
     def asynchronousProcessing(self):
         NUMBER_OF_LAMBDA_FUNCTIONS = 5
         asession = AsyncHTMLSession()
-        print("Commencing asynchronous requests")
-        print("Number of requesting processes set to 5")
 
         asession.run(  # Calls 5 requests (PROCESSES) in 1 go
             lambda: self.get_product_reviews(self.link, asession, 5),
@@ -61,7 +59,6 @@ class amazon_review_scraper:
         count = soup.find('div', attrs={'class':'a-row a-spacing-base a-size-base'})
         rating_count = count.text.split('|')
         real_count = review_pages(re.sub('\D', '', str(rating_count[1])))
-        print(real_count)
 
         for i in range(1, real_count+1):
 
@@ -77,12 +74,12 @@ class amazon_review_scraper:
                 self.reviews[rating-1].append(review_stripped)
 
     def store_product_reviews(self):
-        file_name = str(self.link + '.csv')
-        fieldnames = ['Rating', 'Review']
+        file_name = str('reviews/'+self.link + '.csv')
+        fieldnames = ['Rating', 'Reviews']
         with open(file_name, 'a', encoding="utf-8", newline='') as filewriter:
             writer = csv.DictWriter(filewriter, fieldnames=fieldnames)
             writer.writeheader()
             for i in range(len(self.reviews)):
                 for j in range(len(self.reviews[i])):
-                    writer.writerow({'Rating': str(i + 1), 'Review': str(self.reviews[i][j])})
+                    writer.writerow({'Rating': str(i + 1), 'Reviews': str(self.reviews[i][j])})
         print("Review scrape completed for " + str(self.link) + " saved as " + file_name)

@@ -7,8 +7,8 @@ class Amazon_Scraper(amazon_product_scraper, amazon_link_scraper, amazon_review_
     def __init__(self):
         self.scraper = 'Amazon'
 
-    def linkScrape(self, searchParameter):
-        super().userInput(searchParameter)
+    def linkScrape(self, searchParameter, itemQuantity):
+        super().userInput(searchParameter, itemQuantity)
         super().linkSearch()
         return super().storeUrl()
 
