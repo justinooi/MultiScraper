@@ -54,5 +54,5 @@ class shopee_review_scraper:
             writer.writeheader()
             for i in range(len(self.reviews)):
                 for j in range(len(self.reviews[i])):
-                    writer.writerow({'Rating': str(i+1), 'Reviews': str(self.reviews[i][j]).replace('\n',"")})
+                    writer.writerow({'Rating': str(i+1), 'Reviews': str(self.reviews[i][j]).replace('\n',"").replace(',',"")})
         print("Review scrape completed for " + str(self.link) + " saved as " + file_name)

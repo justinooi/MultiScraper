@@ -4,8 +4,8 @@ from tkinter import ttk
 from tkinter import *
 from Shopee_Scraper import Shopee_Scraper
 from Amazon_Scraper import Amazon_Scraper
-from csvSorter import csvSorter
-
+from storageHandler import storageHandler
+import time
 
 class multiScraperGUI:
     mainBackground = 'LightSteelBlue1'
@@ -120,7 +120,9 @@ class multiScraperGUI:
         backButton.place(relx=0.25, rely=0.80, relheight=0.1, relwidth=0.5)
 
     def callScrape(self, mainGUI, search_parameter, checked_amazon, checked_shopee, itemQuantity):
-        csvSorter().deleteFiles()
+        time.sleep(1)
+        storageHandler().deleteFiles()
+        time.sleep(1)
         callScrapeFrame = tkinter.Frame(mainGUI, bg=self.mainBackground)
         callScrapeFrame.place(relx=0, rely=0, relheight=1, relwidth=1)
 
@@ -177,7 +179,7 @@ class multiScraperGUI:
         itemList.place(relx=0,rely=0.1, relheight=0.5, relwidth=1)
 
 
-        csvSorter().initialization(itemList)
+        storageHandler().initialization(itemList)
 
         #Sorting Options
         sortVariable = StringVar()
@@ -197,7 +199,7 @@ class multiScraperGUI:
         saveInfo.place(relx=0.6, rely=0.6, relheight=0.05, relwidth=0.4)
 
         #Sort Button
-        sortButton = Button(productDetailsFrame, text="SORT", command=lambda: [csvSorter().sortParams(sortVariable.get(),itemList)])
+        sortButton = Button(productDetailsFrame, text="SORT", command=lambda: [storageHandler().sortParams(sortVariable.get(), itemList)])
         sortButton.config(font=("Arial", 20))
         sortButton.place(relx=0.4, rely=0.65, relheight=0.05, relwidth=0.1)
 
@@ -217,12 +219,12 @@ class multiScraperGUI:
         reCrawlButton.place(relx=0.75, rely=0.85, relheight=0.1, relwidth=0.2)
 
         #saveButton
-        saveButton = Button(productDetailsFrame, text="Save Product Details", command=lambda: [csvSorter().saveData(itemList.item(itemList.selection())['values'])])
+        saveButton = Button(productDetailsFrame, text="Save Product Details", command=lambda: [storageHandler().saveData(itemList.item(itemList.selection())['values'])])
         saveButton.config(font=("Arial", 15))
         saveButton.place(relx=0.7, rely=0.66, relheight=0.05, relwidth=0.2)
 
         #check Review Button
-        saveButton = Button(productDetailsFrame, text="Check reviews", command=lambda: [productDetailsFrame.place_forget(),self.reviewsPage(mainGUI)])
+        saveButton = Button(productDetailsFrame, text="Check reviews", command=lambda: [(productDetailsFrame.place_forget(),self.reviewsPage(mainGUI,itemList.item(itemList.selection())['values'])) if itemList.item(itemList.selection())['values'] != "" else 0])
         saveButton.config(font=("Arial", 15))
         saveButton.place(relx=0.7, rely=0.72, relheight=0.05, relwidth=0.25)
 
@@ -250,7 +252,7 @@ class multiScraperGUI:
         itemList.column(item_column[5], anchor="n", width=30)
         itemList.place(relx=0,rely=0.1, relheight=0.5, relwidth=1)
 
-        csvSorter().showFavourites(itemList)
+        storageHandler().showFavourites(itemList)
 
         #Main Menu
         mainMenuButton = Button(favouritesFrame, text="Main Menu", command=lambda: [favouritesFrame.place_forget(),self.mainMenu(mainGUI)])
@@ -268,11 +270,12 @@ class multiScraperGUI:
         reCrawlButton.place(relx=0.75, rely=0.85, relheight=0.1, relwidth=0.2)
 
         #delete all Button
-        deleteAllButton = Button(favouritesFrame, text="Delete ALL", command=lambda: [csvSorter().deleteAllFavourites(itemList)])
+        deleteAllButton = Button(favouritesFrame, text="Delete ALL", command=lambda: [storageHandler().deleteAllFavourites(itemList)])
         deleteAllButton.config(font=("Arial", 30))
         deleteAllButton.place(relx=0.37, rely=0.7, relheight=0.1, relwidth=0.25)
 
-    def reviewsPage(self, mainGUI):
+    def reviewsPage(self, mainGUI, itemID):
+
         reviewsFrame = tkinter.Frame(mainGUI, bg=self.mainBackground)
         reviewsFrame.place(relx=0, rely=0, relheight=1, relwidth=1)
 
@@ -287,23 +290,54 @@ class multiScraperGUI:
         for i in range(len(item_column)):
             itemList.heading(item_column[i], text=item_column[i])
 
-        itemList.column(item_column[0], anchor="w", width=30)
+        itemList.column(item_column[0], anchor="n", width=30)
         itemList.column(item_column[1], anchor="w", width=1200)
 
         itemList.place(relx=0,rely=0.1, relheight=0.5, relwidth=1)
 
-
+        storageHandler().readReview(itemID[0], itemList)
 
 
         #Back Button
-        reviewButton = Button(reviewsFrame, text="Back", command=lambda: [reviewsFrame.place_forget(),self.productDetailsPage(mainGUI)])
-        reviewButton.config(font=("Arial", 30))
-        reviewButton.place(relx=0.2, rely=0.85, relheight=0.1, relwidth=0.25)
+        backButton = Button(reviewsFrame, text="Back", command=lambda: [reviewsFrame.place_forget(),self.productDetailsPage(mainGUI)])
+        backButton.config(font=("Arial", 30))
+        backButton.place(relx=0.2, rely=0.85, relheight=0.1, relwidth=0.25)
 
         #Sentiment Analysis Button
-        reviewButton = Button(reviewsFrame, text="Sentiment Analysis", command=lambda: [])
+        reviewButton = Button(reviewsFrame, text="Sentiment Analysis", command=lambda: [reviewsFrame.place_forget(),self.sentimentPage(mainGUI,itemID)])
         reviewButton.config(font=("Arial", 30))
         reviewButton.place(relx=0.6, rely=0.85, relheight=0.1, relwidth=0.3)
+
+    def sentimentPage(self, mainGUI, itemID):
+        sentimentFrame = tkinter.Frame(mainGUI, bg=self.mainBackground)
+        sentimentFrame.place(relx=0, rely=0, relheight=1, relwidth=1)
+
+        title = tkinter.Label(sentimentFrame,
+                              text="Sentiment Analysis",
+                              bg=self.mainBackground)
+        title.config(font=("MS Sans Serif", 40))
+        title.place(relx=0, rely=0, relheight=0.1, relwidth=1)
+
+        item_column = ('No.','Rating', 'Review', 'Sentiment', 'Confidence')
+        itemList = ttk.Treeview(sentimentFrame, columns=item_column, show='headings')
+        for i in range(len(item_column)):
+            itemList.heading(item_column[i], text=item_column[i])
+
+        itemList.column(item_column[0], anchor="n", width=5)
+        itemList.column(item_column[1], anchor="n", width=30)
+        itemList.column(item_column[2], anchor="w", width=1000)
+        itemList.column(item_column[3], anchor="n", width=50)
+        itemList.column(item_column[4], anchor="w", width=50)
+
+        itemList.place(relx=0, rely=0.1, relheight=0.5, relwidth=1)
+
+        #Back Button
+        backButton = Button(sentimentFrame, text="Back", command=lambda: [sentimentFrame.place_forget(),self.reviewsPage(mainGUI, itemID)])
+        backButton.config(font=("Arial", 30))
+        backButton.place(relx=0.35, rely=0.85, relheight=0.1, relwidth=0.25)
+
+        storageHandler().readSentiment(itemID[0], itemList)
+
 
 main_GUI = multiScraperGUI()
 main_GUI.initialization()
