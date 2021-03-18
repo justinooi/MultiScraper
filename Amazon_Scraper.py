@@ -33,6 +33,7 @@ class Amazon_Scraper(amazon_product_scraper, amazon_link_scraper, amazon_review_
     def productScrape(self, url_file):
         """This function is called upon clicking the submit button, managing the calling of various functions in other sub classes, 
            amazon_product_scraper class:
+                init class with file, links, results and attributes
                 get_product_links(): to get and store the links of the products
                 asynchronousProcessing(): to wait for a specified number of tasks to complete before continuing                             
 
