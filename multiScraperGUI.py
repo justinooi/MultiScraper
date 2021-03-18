@@ -132,12 +132,11 @@ class multiScraperGUI:
         warningMsg.config(font=("MS Sans Serif", 40))
         warningMsg.place(relx=0, rely=0.3, relheight=0.2, relwidth=1)
 
-        
         reviewButton = Button(callScrapeFrame, text="Review Data",
                             command=lambda: [callScrapeFrame.place_forget(), self.productDetailsPage(mainGUI)])
         reviewButton.config(font=("Arial", 30))
         reviewButton.place(relx=0.25, rely=0.80, relheight=0.1, relwidth=0.5)
-        
+
         if checked_shopee == 1:
             url = Shopee_Scraper().linkScrape(search_parameter.get(),itemQuantity)
             Shopee_Scraper().productScrape(url)
@@ -147,6 +146,10 @@ class multiScraperGUI:
             Amazon_Scraper().productScrape(url)
 
         print("Done")
+
+
+
+
 
 
     def productDetailsPage(self, mainGUI):
@@ -219,9 +222,9 @@ class multiScraperGUI:
         saveButton.place(relx=0.7, rely=0.66, relheight=0.05, relwidth=0.2)
 
         #check Review Button
-        saveButton = Button(productDetailsFrame, text="Check reviews", command=lambda: [(productDetailsFrame.place_forget(),self.reviewsPage(mainGUI,itemList.item(itemList.selection())['values'])) if itemList.item(itemList.selection())['values'] != "" else 0])
-        saveButton.config(font=("Arial", 15))
-        saveButton.place(relx=0.7, rely=0.72, relheight=0.05, relwidth=0.25)
+        checkReviewButton = Button(productDetailsFrame, text="Check reviews", command=lambda: [(productDetailsFrame.place_forget(),self.reviewsPage(mainGUI,itemList.item(itemList.selection())['values'])) if itemList.item(itemList.selection())['values'] != "" else 0])
+        checkReviewButton.config(font=("Arial", 15))
+        checkReviewButton.place(relx=0.7, rely=0.72, relheight=0.05, relwidth=0.25)
 
 
     def favouritesPage(self, mainGUI):
@@ -268,6 +271,10 @@ class multiScraperGUI:
         deleteAllButton = Button(favouritesFrame, text="Delete ALL", command=lambda: [storageHandler().deleteAllFavourites(itemList)])
         deleteAllButton.config(font=("Arial", 30))
         deleteAllButton.place(relx=0.37, rely=0.7, relheight=0.1, relwidth=0.25)
+
+        checkReviewButton = Button(favouritesFrame, text="Check reviews", command=lambda: [(favouritesFrame.place_forget(),self.reviewsPage(mainGUI,itemList.item(itemList.selection())['values'])) if itemList.item(itemList.selection())['values'] != "" else 0])
+        checkReviewButton.config(font=("Arial", 15))
+        checkReviewButton.place(relx=0.7, rely=0.72, relheight=0.05, relwidth=0.25)
 
     def reviewsPage(self, mainGUI, itemID):
 
