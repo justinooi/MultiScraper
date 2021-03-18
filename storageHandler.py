@@ -18,31 +18,37 @@ class storageHandler:
 
         elif input == "ID":
             self.deleteAll(itemList)
+            self.csvReader()
             self.sortByID()
             self.displayItems(itemList)
 
         elif input == "Name":
             self.deleteAll(itemList)
+            self.csvReader()
             self.sortByName()
             self.displayItems(itemList)
 
         elif input == "Price":
             self.deleteAll(itemList)
+            self.csvReader()
             self.sortByPrice()
             self.displayItems(itemList)
 
         elif input == "Rating":
             self.deleteAll(itemList)
+            self.csvReader()
             self.sortByRating()
             self.displayItems(itemList)
 
         elif input == "Rating Count":
             self.deleteAll(itemList)
+            self.csvReader()
             self.sortByRatingQuantity()
             self.displayItems(itemList)
 
         elif input == "Stock Info":
             self.deleteAll(itemList)
+            self.csvReader()
             self.sortByQuantityLeft()
             self.displayItems(itemList)
 
