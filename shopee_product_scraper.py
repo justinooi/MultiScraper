@@ -6,20 +6,40 @@ from requests_html import AsyncHTMLSession
 from abstract_product_scraper import abstract_product_scraper
 
 class shopee_product_scraper(abstract_product_scraper):
+    """This class functions to scrape all product data of the user requested pages from user requested website defined in the GUI. All function elements are also controlled by the abstract class.
+
+    Args:
+        abstract_product_scraper (Object): user define abstract class defining the properties of how the product scaper should function.
+
+    Returns:
+        [String]: File name of the file that all the details of the scraped product is stored.
+    """
 
     ITEMS_PER_PAGE = 50
 
     def __init__(self, url_file):
+        """Self defined variables for storage purposes
+
+        Args:
+            url_file (string): file path 
+        """
         self.file = url_file
         self.links = []
         self.results = []
         self.attributes = []
 
     def get_product_links(self):
+        """Get and seperates all product links and preparing the links for scraping.
+        """
         with open(self.file) as file_reader:
             self.links = file_reader.read().splitlines()
 
     def asynchronousProcessing(self):
+        """Async file processes the links that are prepared and scrapes all the link in an async function awaiting request of 5 at a time.
+                asession : creates a html session for the scarping of data
+                NUMBER_OF_LAMBDA_FUNCTIONS : set the number of request calls wanted per cycle 
+        """
+            
         NUMBER_OF_LAMBDA_FUNCTIONS = 10
         asession = AsyncHTMLSession()
         print("Commencing asynchronous requests")
@@ -73,6 +93,15 @@ class shopee_product_scraper(abstract_product_scraper):
                 self.attributes.append(self.results[i][j])
 
     async def get_product_details(self, links, asession):
+        """This function gets all product details after opening the prepared links in the async function 
+
+        Args:
+            link (Int): Contains the link that is prepared for scarping 
+            asession (object): session created by the library for the html page that is opened 
+
+        Returns:
+            [Tuple]: Returns everything that is scraped such as price and name of product. Return of this type can contain different variable types 
+        """
 
         items = [0] * 6
         items[0] = links #Sets column 0 to links
@@ -130,6 +159,11 @@ class shopee_product_scraper(abstract_product_scraper):
         return tuple(items)
 
     def store_product_details(self):
+        """Stores all the details of the scraped product from the get_product_details function into a csv file 
+
+        Returns:
+          [String]: File name of the file that all the details of the scraped product is stored.
+        """
         #file_name = 'shopee-scrape-' + str(time.time()) + '.csv'
         file_name = 'shopee-scrape.csv'
         with open(file_name, 'w', newline='', encoding='utf-8') as f:

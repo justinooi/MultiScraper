@@ -49,16 +49,24 @@ class Amazon_Scraper(amazon_product_scraper, amazon_link_scraper, amazon_review_
         return amazon_product_scraper.store_product_details(self)
 
     def reviewScrape(self, url):
-        """This function is called upon clicking the submit button, managing the calling of various functions in other classes,
-
+        """This function is called upon clicking the submit button, managing the calling of various functions in other sub classes,
+                Amazon_review_scraper class:
+                init class with file, links, results and attributes
+                asynchronousProcessing(): to wait for a specified number of tasks to complete before continuing the review scaping and store it to a text file   
+                store_product_reviews: Get all stored scraped review
         Args:
-            url ([type]): [description]
+            url (Int): get url(Product ID) from the main page selected product by ther user.
         """
         amazon_review_scraper.__init__(self, url)
         amazon_review_scraper.asynchronousProcessing(self)
         amazon_review_scraper.store_product_reviews(self)
 
     def reviewScrapeAll(self, url_file):
+        """Open the saved data file of products that is scraped and saved by the user.
+
+        Args:
+            url_file (String): The file path of the saved data file of the user scraped data 
+        """
         with open(url_file) as file_reader:
             links = file_reader.read().splitlines()
 
