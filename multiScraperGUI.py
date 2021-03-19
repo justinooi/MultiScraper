@@ -8,10 +8,16 @@ from storageHandler import storageHandler
 import time
 
 class multiScraperGUI:
+    """This class manages the overall GUI of this program. Widgets from the Tkinter library were used to construct the overall GUI.
+    
+    """
     mainBackground = 'LightSteelBlue1'
     testBackground = 'SlateGray2'
 
     def initialization(self):
+        """This function initializes a GUI window with a size of 1300 by 700
+        
+        """
         mainGUI = tkinter.Tk(className='MultiScraper')  # Sets window name
         mainGUI.geometry("1300x700+100+50")  # Sets window size
         mainGUI.configure(bg=self.mainBackground)
@@ -20,6 +26,12 @@ class multiScraperGUI:
         mainGUI.mainloop()  # Run the GUI
 
     def mainMenu(self, mainGUI):
+        """This function constructs the main menu
+
+        Args:
+            mainGUI (object): The GUI instance
+
+        """
         mainMenuFrame = tkinter.Frame(mainGUI, bg=self.mainBackground)
         mainMenuFrame.place(relx=0.1, rely=0, relheight=0.9, relwidth=0.8)
 
@@ -55,6 +67,12 @@ class multiScraperGUI:
         exitButton.place(relx=0.25, rely=0.90, relheight=0.1, relwidth=0.5)
 
     def crawlerPage(self, mainGUI):
+        """This function constructs the crawl page
+
+        Args:
+            mainGUI (object): The GUI instance
+
+        """
         # Instantiate crawlerFrame
         crawlerFrame = tkinter.Frame(mainGUI, bg=self.mainBackground)
         crawlerFrame.place(relx=0, rely=0, relheight=1, relwidth=1)
@@ -120,6 +138,15 @@ class multiScraperGUI:
         backButton.place(relx=0.25, rely=0.80, relheight=0.1, relwidth=0.5)
 
     def callScrape(self, mainGUI, search_parameter, checked_amazon, checked_shopee, itemQuantity):
+        """This function constructs a page that informs the user that the program has finished scraping
+
+        Args:
+            mainGUI (object): The GUI instance
+            search_parameter (str): Search parameter of user
+            checked_amazon (int): Flag to crawl Amazon
+            checked_shopee (int): Flag to crawl Shopee
+            itemQuantity (int): Determines item quantity in multiples of 10
+        """
         time.sleep(1)
         storageHandler().deleteFiles()
         time.sleep(1)
@@ -153,6 +180,11 @@ class multiScraperGUI:
 
 
     def productDetailsPage(self, mainGUI):
+        """This function constructs a page that displays product details
+        
+        Args:
+            mainGUI (object): The GUI instance
+        """
         productDetailsFrame = tkinter.Frame(mainGUI, bg=self.mainBackground)
         productDetailsFrame.place(relx=0, rely=0, relheight=1, relwidth=1)
 
@@ -228,6 +260,11 @@ class multiScraperGUI:
 
 
     def favouritesPage(self, mainGUI):
+        """This function constructs a page that displays products saved by users
+        
+        Args:
+            mainGUI (object): The GUI instance
+        """
         favouritesFrame = tkinter.Frame(mainGUI, bg=self.mainBackground)
         favouritesFrame.place(relx=0, rely=0, relheight=1, relwidth=1)
 
@@ -283,6 +320,12 @@ class multiScraperGUI:
         checkReviewButton.place(relx=0.7, rely=0.72, relheight=0.05, relwidth=0.25)
 
     def reviewsPage(self, mainGUI, itemID):
+        """This function constructs a page that displays reviews of a product selected by a user
+        
+        Args:
+            mainGUI (object): The GUI instance
+            itemID (str): Product ID
+        """
 
         reviewsFrame = tkinter.Frame(mainGUI, bg=self.mainBackground)
         reviewsFrame.place(relx=0, rely=0, relheight=1, relwidth=1)
@@ -317,6 +360,14 @@ class multiScraperGUI:
         reviewButton.place(relx=0.6, rely=0.85, relheight=0.1, relwidth=0.3)
 
     def sentimentPage(self, mainGUI, itemID):
+        """This function constructs a page that displays sentiments of reviews
+        
+        Args:
+            mainGUI (object): The GUI instance
+            itemID (str): Product ID
+
+        """
+
         sentimentFrame = tkinter.Frame(mainGUI, bg=self.mainBackground)
         sentimentFrame.place(relx=0, rely=0, relheight=1, relwidth=1)
 
