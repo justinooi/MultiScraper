@@ -78,8 +78,11 @@ class storageHandler:
     def sortByPrice(self):
         """Sorting products by price
         """
-        self.items.sort(key=lambda x: float(
-            x[2].replace("$", "") if " - " not in str(x[2]) else x[2].replace("$", "").split(" - ")[0]), reverse=True)
+        try:
+            self.items.sort(key=lambda x: float(
+                x[2].replace("$", "") if " - " not in str(x[2]) else x[2].replace("$", "").split(" - ")[0]), reverse=True)
+        except:
+            pass
 
     def sortByRating(self):
         """Sorting products by rating
