@@ -5,16 +5,16 @@ import requests
 
 
 class shopee_link_scraper(abstract_link_scraper):
-    """This class inherits methods from its superclass
+    """Link scraper get all the Unique ID of the product search that is specified in the GUI by the user and store it to a file.
     
     Args:
-        absract_link_scraper (superclass): Methods from superclass are being inherited by this class 
+        abstract_product_scraper (Object): user define abstract class defining the properties of how the product scaper should function.
     """
     identificationParams = []
     items_per_page = 50
 
     def linkSearch(self):
-        """This function requests and gathers shop and item IDs from Shopee. They are stored into the identificationParams parameter.
+        """extracts all the unique id from the URL which will be the product ID to scrape from.
         
         """
         try:
@@ -29,10 +29,10 @@ class shopee_link_scraper(abstract_link_scraper):
             self.identificationParams = []
 
     def storeUrl(self):
-        """This function opens a txt file, writes the shop and item IDs and saves it into the current directory
+        """Stores all the unique ID to a file into the specified directory
 
         Returns:
-            String : 'shopee_urls.txt'
+            [String]: return the file name that the data is stored in.
         
         """
         for x in range(len(self.identificationParams)):
