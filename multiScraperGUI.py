@@ -268,10 +268,16 @@ class multiScraperGUI:
         reCrawlButton.place(relx=0.75, rely=0.85, relheight=0.1, relwidth=0.2)
 
         #delete all Button
-        deleteAllButton = Button(favouritesFrame, text="Delete ALL", command=lambda: [storageHandler().deleteAllFavourites(itemList)])
-        deleteAllButton.config(font=("Arial", 30))
-        deleteAllButton.place(relx=0.37, rely=0.7, relheight=0.1, relwidth=0.25)
+        deleteAllButton = Button(favouritesFrame, text="DELETE ALL", command=lambda: [storageHandler().deleteAllFavourites(itemList)])
+        deleteAllButton.config(font=("Arial", 20))
+        deleteAllButton.place(relx=0.05, rely=0.7, relheight=0.08, relwidth=0.20)
 
+        # Delete particular product
+        deleteProductButton = Button(favouritesFrame, text="Delete Product", command=lambda: [(storageHandler().deleteSavedProduct(itemList.item(itemList.selection())['values'],itemList)) if itemList.item(itemList.selection())['values'] != "" else 0])
+        deleteProductButton.config(font=("Arial", 20))
+        deleteProductButton.place(relx=0.37, rely=0.7, relheight=0.08, relwidth=0.20)
+
+        #Check reviews
         checkReviewButton = Button(favouritesFrame, text="Check reviews", command=lambda: [(favouritesFrame.place_forget(),self.reviewsPage(mainGUI,itemList.item(itemList.selection())['values'])) if itemList.item(itemList.selection())['values'] != "" else 0])
         checkReviewButton.config(font=("Arial", 15))
         checkReviewButton.place(relx=0.7, rely=0.72, relheight=0.05, relwidth=0.25)
