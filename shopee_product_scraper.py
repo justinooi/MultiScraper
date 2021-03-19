@@ -116,12 +116,18 @@ class shopee_product_scraper(abstract_product_scraper):
         try:
             for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[1]/span'):
                 items[1] = item.text.replace(",", "")
+            if items[1] == 0:
+                for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[1]'):
+                    items[1] = item.text.replace(",", "")
         except:
             pass
 
         try:
             for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[3]/div/div/div/div/div[2]/div[1]'):
                 items[2] = item.text.replace(",", "")
+            if items[2] == 0:
+                for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[3]/div/div/div/div/div/div'):
+                    items[2] = item.text.replace(",", "")
         except:
             pass
 
@@ -135,7 +141,7 @@ class shopee_product_scraper(abstract_product_scraper):
 
         try:
             for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[2]/div[2]/div[1]'):
-                items[4] = item.text
+                items[4] = item.text.replace(".","").replace("k","000")
         except:
             pass
 
@@ -145,7 +151,7 @@ class shopee_product_scraper(abstract_product_scraper):
         except:
             pass
 
-        if items[1] is None:  # When GET fails
+        if items[1] == 0:  # When GET fails
             items[1] = "FAILED TO GET"
         if items[2]==0:
             items[2] = "FAILED TO GET"
