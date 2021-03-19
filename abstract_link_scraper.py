@@ -2,10 +2,10 @@ from abc import ABC, abstractclassmethod
 
 # Abstract class for scraping links
 class abstract_link_scraper(ABC):
-    """Abstract class and method for the shoppee and amazon scraper. This class will allow both having common API methods to function accordingly to what the abstract method allows.
+    """Abstract class and method for the shopee and amazon scraper. This class will allow both having common API methods to function accordingly to what the abstract method allows.
 
     Args:
-        ABC ([object]): make the class an abstract class 
+        ABC (object): make the class an abstract class 
     """
     searchParameters = ""
     itemQuantity = 10

@@ -5,7 +5,7 @@ import requests
 
 
 class shopee_link_scraper(abstract_link_scraper):
-    """Link scraper get all the Unique ID of the product search that is specified in the GUI by the user and store it to a file.
+    """This class gets all the Unique ID of the product search that is specified in the GUI by the user and store it to a file.
     
     Args:
         abstract_product_scraper (Object): user define abstract class defining the properties of how the product scaper should function.

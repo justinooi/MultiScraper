@@ -32,7 +32,7 @@ class shopee_review_scraper:
         )
 
     async def get_product_reviews(self, links, asession, rating):
-        """scraps the link of the product that the user has specified and extract all the reviews from that particular link.
+        """Scraps the link of the product that the user has specified and extract all the reviews from that particular link.
 
         Args:
             links ([Int]): Unique ID of the product.

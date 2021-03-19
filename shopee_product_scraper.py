@@ -29,7 +29,7 @@ class shopee_product_scraper(abstract_product_scraper):
         self.attributes = []
 
     def get_product_links(self):
-        """Get and seperates all product links and preparing the links for scraping.
+        """Gets and seperates all product links and preparing the links for scraping.
         """
         with open(self.file) as file_reader:
             self.links = file_reader.read().splitlines()
@@ -93,7 +93,7 @@ class shopee_product_scraper(abstract_product_scraper):
                 self.attributes.append(self.results[i][j])
 
     async def get_product_details(self, links, asession):
-        """This function gets all product details after opening the prepared links in the async function 
+        """Gets all product details after opening the prepared links in the async function 
 
         Args:
             link (Int): Contains the link that is prepared for scarping 
