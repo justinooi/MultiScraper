@@ -298,7 +298,32 @@ class storageHandler:
         for i, column in enumerate(sentimentItem, start=0):
             itemList.insert("", 0, values=(sentimentItem[i]))
 
+    def deleteSavedProduct(self, itemID, itemList):
+        """Open csv file, reads it, stores parameters into a list, if parameter itemID is equal to row of list, delete row from list and rewrite csv file. Remaining products will then be displayed.
 
+        Args:
+            itemID (str): product ID
+            itemList (treeview): the details of the products
+        """
+        savedItems = []
+        with open('savedItems.csv', 'r+', newline='',
+                  encoding='utf-8') as savedItemsIO:
+            for row in savedItemsIO:
+                if '"\r\n' not in row:
+                    row = row.split(",")
+                    row[5] = row[5].replace('"','')
+                    savedItems.append(row)
+                    if row[0] == itemID[0]:
+                        savedItems.remove(row)
+
+        self.deleteAll(itemList)
+
+        with open('savedItems.csv', 'w', newline='\n', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerows(savedItems)
+
+        for i, column in enumerate(savedItems, start=0):
+            itemList.insert("", 0, values=(savedItems[i]))
 
 
 
