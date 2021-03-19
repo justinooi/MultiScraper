@@ -53,5 +53,4 @@ class amazon_link_scraper(abstract_link_scraper):
         with open('amazon_urls.txt', 'w') as url_storage:
             for link in self.links_list:
                 url_storage.write(link + '\n')
-        self.links_list.clear()
         return 'amazon_urls.txt'
