@@ -1,4 +1,4 @@
-from abc import ABC, abstractclassmethod
+from abc import ABC, abstractmethod
 
 # Abstract class for scraping links
 class abstract_link_scraper(ABC):
@@ -16,8 +16,10 @@ class abstract_link_scraper(ABC):
         self.searchParameters = searchParameters
         self.itemQuantity = itemQuantity
 
+    @abstractmethod
     def linkSearch(self):
         pass
 
+    @abstractmethod
     def storeUrl(self):
         pass
