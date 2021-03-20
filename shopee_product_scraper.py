@@ -1,6 +1,4 @@
-import requests
 import csv
-import time
 import re
 from requests_html import AsyncHTMLSession
 from abstract_product_scraper import abstract_product_scraper
@@ -113,6 +111,7 @@ class shopee_product_scraper(abstract_product_scraper):
         webpage = await asession.get(url, headers=self.HEADERS)
         await webpage.html.arender(sleep=2, timeout=50, scrolldown=True)
 
+        # Retrieve name of the product.
         try:
             for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[1]/span'):
                 items[1] = item.text.replace(",", "")
@@ -122,6 +121,7 @@ class shopee_product_scraper(abstract_product_scraper):
         except:
             pass
 
+        # Retrieve price of product.
         try:
             for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[3]/div/div/div/div/div[2]/div[1]'):
                 items[2] = item.text.replace(",", "")
@@ -131,27 +131,29 @@ class shopee_product_scraper(abstract_product_scraper):
         except:
             pass
 
-
+        # Retrieve rating of the product.
         try:
             for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[2]/div[1]/div[1]'):
                 items[3] = item.text
         except:
             pass
 
-
+        # Retrieve the number of ratings of the product.
         try:
             for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[2]/div[2]/div[1]'):
                 items[4] = item.text.replace(".","").replace("k","000")
         except:
             pass
 
+        # Retrieve stock information using XPath of element.
         try:
             for item in webpage.html.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "flex items-center _90fTvx", ''" " ))]'):
                 items[5] = re.sub('\D', '', str(item.text))
         except:
             pass
 
-        if items[1] == 0:  # When GET fails
+        # Return empty values or error if retrieval fails.
+        if items[1] == 0:
             items[1] = "FAILED TO GET"
         if items[2]==0 or items[2]=='':
             items[2] = "FAILED TO GET"
@@ -170,7 +172,6 @@ class shopee_product_scraper(abstract_product_scraper):
         Returns:
           [String]: File name of the file that all the details of the scraped product is stored.
         """
-        #file_name = 'shopee-scrape-' + str(time.time()) + '.csv'
         file_name = 'shopee-scrape.csv'
         with open(file_name, 'w', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
