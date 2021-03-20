@@ -146,7 +146,7 @@ class shopee_product_scraper(abstract_product_scraper):
             pass
 
         try:
-            for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[4]/div/div[3]/div/div[2]/div[2]/div[2]'):
+            for item in webpage.html.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "flex items-center _90fTvx", ''" " ))]'):
                 items[5] = re.sub('\D', '', str(item.text))
         except:
             pass
