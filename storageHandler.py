@@ -18,6 +18,8 @@ class storageHandler:
         self.deleteAll(itemList)
         self.csvReader(0)
         self.displayItems(itemList)
+        with open('savedItems.csv','a') as fw:
+            pass
 
     def sortParams(self, input, itemList, sortflag):
         """Manages the sorting of products
@@ -209,8 +211,6 @@ class storageHandler:
         savedItem = []
 
         # Create savedItems.csv if not created.
-        with open('savedItems.csv','w') as fw:
-            pass
 
         try:
             with open('savedItems.csv', 'r', newline='',
