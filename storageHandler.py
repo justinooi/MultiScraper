@@ -16,10 +16,10 @@ class storageHandler:
             itemList (treeview): the details of the products
         """
         self.deleteAll(itemList)
-        self.csvReader()
+        self.csvReader(0)
         self.displayItems(itemList)
 
-    def sortParams(self, input, itemList):
+    def sortParams(self, input, itemList, sortflag):
         """Manages the sorting of products
 
         Args:
@@ -31,37 +31,37 @@ class storageHandler:
 
         elif input == "ID":
             self.deleteAll(itemList)
-            self.csvReader()
+            self.csvReader(sortflag)
             self.sortByID()
             self.displayItems(itemList)
 
         elif input == "Name":
             self.deleteAll(itemList)
-            self.csvReader()
+            self.csvReader(sortflag)
             self.sortByName()
             self.displayItems(itemList)
 
         elif input == "Price":
             self.deleteAll(itemList)
-            self.csvReader()
+            self.csvReader(sortflag)
             self.sortByPrice()
             self.displayItems(itemList)
 
         elif input == "Rating":
             self.deleteAll(itemList)
-            self.csvReader()
+            self.csvReader(sortflag)
             self.sortByRating()
             self.displayItems(itemList)
 
         elif input == "Rating Count":
             self.deleteAll(itemList)
-            self.csvReader()
+            self.csvReader(sortflag)
             self.sortByRatingQuantity()
             self.displayItems(itemList)
 
         elif input == "Stock Info":
             self.deleteAll(itemList)
-            self.csvReader()
+            self.csvReader(sortflag)
             self.sortByQuantityLeft()
             self.displayItems(itemList)
 
@@ -100,36 +100,49 @@ class storageHandler:
         """    
         self.items.sort(key=lambda x: str(x[5]) , reverse=True)
 
-    def csvReader(self):
+    def csvReader(self,sortflag):
         """Opens the csv files, reads and stores the data 
         """
         self.items=[]
-        try:
-            with open('shopee-scrape.csv', 'r', newline='',
-                      encoding='utf-8') as items:  # Open shopee.csv file (must be same directory as this program)
-                for row in items:
-                    if not "FAILED TO GET" in row or not "" in row:  # Rejects data with "FAILED TO GET"
-                        if row not in self.items:
-                            if str(row.split(",")[0]) not in str(self.items):  # Removes duplicates via ID
+        if sortflag == 0:
+            try:
+                with open('shopee-scrape.csv', 'r', newline='',
+                        encoding='utf-8') as items:  # Open shopee.csv file (must be same directory as this program)
+                    for row in items:
+                        if not "FAILED TO GET" in row or not "" in row:  # Rejects data with "FAILED TO GET"
+                            if row not in self.items:
+                                if str(row.split(",")[0]) not in str(self.items):  # Removes duplicates via ID
+                                    self.items.append(list(row.split(",")))
+            except:
+                pass
+
+            try:
+                with open('output-amazon.csv', 'r', newline='',
+                        encoding='utf-8') as items:  # Open output-amazon.csv file (must be same directory as this program)
+                    for row in items:
+                        if ("N/A" not in row) and ("IGNORE" not in row): #Rejects invalid data
+                            if str(row.split(",")[0]) not in str(self.items): #Removes duplicates via ID
                                 self.items.append(list(row.split(",")))
-        except:
-            pass
+            except:
+                pass
+            
+        elif sortflag == 1:
+            try:
+                with open('savedItems.csv', 'r', newline='',
+                          encoding='utf-8') as savedItemsIO:
+                    for row in savedItemsIO:
+                        if '"\r\n' not in row:
+                            self.items.append(row.split(","))
+            except:
+                pass
 
-        try:
-            with open('output-amazon.csv', 'r', newline='',
-                      encoding='utf-8') as items:  # Open shopee.csv file (must be same directory as this program)
-                for row in items:
-                    if ("N/A" not in row) and ("IGNORE" not in row): #Rejects invalid data
-                        if str(row.split(",")[0]) not in str(self.items): #Removes duplicates via ID
-                            self.items.append(list(row.split(",")))
-        except:
-            pass
 
-        for i in range(len(self.items)):
-            self.items[i][3] = self.items[i][3].replace("out of 5 stars","")
-            self.items[i][4] = self.items[i][4].replace("ratings","")
-            if self.items[i][5] == "\r\n":  # Removes NULL values
-                self.items[i][5] = "0"
+        if sortflag == 0:
+            for i in range(len(self.items)):
+                self.items[i][3] = self.items[i][3].replace("out of 5 stars","")
+                self.items[i][4] = self.items[i][4].replace("ratings","")
+                if self.items[i][5] == "\r\n":  # Removes NULL values
+                    self.items[i][5] = "0"
 
     def displayItems(self, itemList):
         """Displays the items after sorting
