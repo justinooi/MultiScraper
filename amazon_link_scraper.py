@@ -14,6 +14,7 @@ class amazon_link_scraper(abstract_link_scraper):
     def linkSearch(self):
         """extracts all the unique id from the URL which will be the product ID to scrape from.
         """
+        self.links_list = []
         # Retrieve all product ASIN (unique product ID)
         try:
             for x in range(1):
@@ -36,8 +37,6 @@ class amazon_link_scraper(abstract_link_scraper):
                     counter=counter+1
                     if counter == self.itemQuantity:
                         break
-
-
 
             self.storeUrl()
 
