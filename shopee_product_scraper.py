@@ -3,6 +3,7 @@ import re
 from requests_html import AsyncHTMLSession
 from abstract_product_scraper import abstract_product_scraper
 
+
 class shopee_product_scraper(abstract_product_scraper):
     """This class functions to scrape all product data of the user requested pages from user requested website defined in the GUI. All function elements are also controlled by the abstract class.
 
@@ -37,7 +38,7 @@ class shopee_product_scraper(abstract_product_scraper):
                 asession : creates a html session for the scarping of data
                 NUMBER_OF_LAMBDA_FUNCTIONS : set the number of request calls wanted per cycle 
         """
-            
+
         NUMBER_OF_LAMBDA_FUNCTIONS = 10
         asession = AsyncHTMLSession()
         print("Commencing asynchronous requests")
@@ -102,7 +103,7 @@ class shopee_product_scraper(abstract_product_scraper):
         """
 
         items = [0] * 6
-        items[0] = links #Sets column 0 to links
+        items[0] = links  # Sets column 0 to links
         url = 'http://shopee.sg/load-i.' + links
 
         if 'IGNORE' in url:
@@ -111,7 +112,6 @@ class shopee_product_scraper(abstract_product_scraper):
         webpage = await asession.get(url, headers=self.HEADERS)
         await webpage.html.arender(sleep=2, timeout=50, scrolldown=True)
 
-        # Retrieve name of the product.
         try:
             for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[1]/span'):
                 items[1] = item.text.replace(",", "")
@@ -121,41 +121,45 @@ class shopee_product_scraper(abstract_product_scraper):
         except:
             pass
 
-        # Retrieve price of product.
         try:
-            for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[3]/div/div/div/div/div[2]/div[1]'):
+            for item in webpage.html.xpath(
+                    '//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[3]/div/div/div/div/div[2]/div[1]'):
                 items[2] = item.text.replace(",", "")
             if items[2] == 0:
-                for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[3]/div/div/div/div/div/div'):
+                for item in webpage.html.xpath(
+                        '//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[3]/div/div/div/div/div/div'):
+                    items[2] = item.text.replace(",", "")
+            if '%' in items[2]:
+                for item in webpage.html.xpath(
+                        '//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[3]/div/div/div/div/div[2]/div[1]'):
                     items[2] = item.text.replace(",", "")
         except:
             pass
 
-        # Retrieve rating of the product.
         try:
-            for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[2]/div[1]/div[1]'):
+            for item in webpage.html.xpath(
+                    '//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[2]/div[1]/div[1]'):
                 items[3] = item.text
         except:
             pass
 
-        # Retrieve the number of ratings of the product.
         try:
-            for item in webpage.html.xpath('//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[2]/div[2]/div[1]'):
-                items[4] = item.text.replace(".","").replace("k","000")
+            for item in webpage.html.xpath(
+                    '//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[2]/div[2]/div[1]'):
+                items[4] = item.text.replace(".", "").replace("k", "000")
         except:
             pass
 
-        # Retrieve stock information using XPath of element.
         try:
-            for item in webpage.html.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "flex items-center _90fTvx", ''" " ))]'):
+            for item in webpage.html.xpath(
+                    '//*[contains(concat( " ", @class, " " ), concat( " ", "flex items-center _90fTvx", ''" " ))]'):
                 items[5] = re.sub('\D', '', str(item.text))
         except:
             pass
 
-        # Return empty values or error if retrieval fails.
-        if items[1] == 0:
+        if items[1] == 0:  # When GET fails
             items[1] = "FAILED TO GET"
-        if items[2]==0 or items[2]=='':
+        if items[2] == 0 or items[2] == '' or '%' in items[2]:
             items[2] = "FAILED TO GET"
         if items[3] is None:
             items[3] = "0"
