@@ -90,18 +90,27 @@ class storageHandler:
     def sortByRating(self):
         """Sorting products by rating
         """
-        self.items.sort(key=lambda x: float(x[3]), reverse=False)
+        try:
+            self.items.sort(key=lambda x: float(x[3]), reverse=False)
+        except:
+            pass
 
     def sortByRatingQuantity(self):
         """Sorting products by quantity
         """
-        self.items.sort(key=lambda x: float(x[4]), reverse=False)
+        try:
+            self.items.sort(key=lambda x: float(x[4] if self.is_number(x[5]) is True else x[4].replace('rating','')), reverse=False)
+        except:
+            pass
 
 
     def sortByQuantityLeft(self):
         """Sorting products by remaining quantity
-        """    
-        self.items.sort(key=lambda x: str(x[5]) , reverse=True)
+        """
+        try:
+            self.items.sort(key=lambda x: float(x[5] if self.is_number(x[5]) is True else 0) , reverse=True)
+        except:
+            pass
 
     def csvReader(self,sortflag):
         """Opens the csv files, reads and stores the data 
