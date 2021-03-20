@@ -20,7 +20,6 @@ class shopee_review_scraper:
                 asession : creates a html session for the scarping of data
                 NUMBER_OF_LAMBDA_FUNCTIONS : set the limit of request calls wanted per cycle 
         """
-        NUMBER_OF_LAMBDA_FUNCTIONS = 5
         asession = AsyncHTMLSession()
 
         asession.run(  # Calls 5 requests (PROCESSES) in 1 go
@@ -38,8 +37,10 @@ class shopee_review_scraper:
             links ([Int]): Unique ID of the product.
             asession ([object]): Create a session for the html page.
             rating ([string]): Rating from the reviews that are scraped.
-            comment ([string]) : comment of the reviews that are scraped 
+            comment ([string]): Comment of the reviews that are scraped
         """
+
+        # ID contains ID of shop and product, split them into two.
         ids = links.split('.')
         shop_id = ids[0]
         product_id = ids[1]
@@ -50,6 +51,7 @@ class shopee_review_scraper:
         webpage = await asession.get(url, headers=self.HEADERS)
         webpage = webpage.json()
 
+        # Retrieve star and review from JSON provided by Shopee API.
         for item in webpage['data']['ratings']:
             if item['comment'] == '':
                 if item['rating_star'] == '':
