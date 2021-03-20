@@ -17,6 +17,7 @@ class shopee_link_scraper(abstract_link_scraper):
         """extracts all the unique id from the URL which will be the product ID to scrape from.
         
         """
+        self.identificationParams = []
         try:
             url = 'https://shopee.sg/api/v2/search_items/?by=relevancy&keyword=' + self.searchParameters + '&limit=' + str(
                 self.itemQuantity) + '&newest=' + str(
@@ -35,12 +36,11 @@ class shopee_link_scraper(abstract_link_scraper):
             [String]: return the file name that the data is stored in.
         
         """
+        self.links_list = []
         for x in range(len(self.identificationParams)):
             self.links_list.append(str(self.identificationParams[x][0]) + '.' + str(self.identificationParams[x][1]))
         print("Links created")
         with open('shopee_urls.txt', 'w') as url_storage:
             for link in self.links_list:
                 url_storage.write(link + '\n')
-
-        self.links_list.clear()
         return 'shopee_urls.txt'
