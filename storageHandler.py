@@ -1,5 +1,6 @@
 import csv
 import ctypes
+import webbrowser
 from Shopee_Scraper import Shopee_Scraper
 from Amazon_Scraper import Amazon_Scraper
 from Sentiment_Analysis import Sentiment_Analysis
@@ -346,7 +347,14 @@ class storageHandler:
         for i, column in enumerate(savedItems, start=0):
             itemList.insert("", 0, values=(savedItems[i]))
 
+    def openURL(self, selectedItem):
 
+        if "." in selectedItem[0]:
+            url = 'https://shopee.sg/load-i.' + selectedItem[0]
+        else:
+            url = 'https://amazon.com/dp/' + selectedItem[0]
+
+        webbrowser.open(url)
 
 
 
