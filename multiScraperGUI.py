@@ -13,7 +13,6 @@ class multiScraperGUI(storageHandler):
     """
     mainBackground = 'LightSteelBlue1'
 
-
     def initGUI(self):
         """This function initializes a GUI window with a size of 1300 by 700
         
@@ -52,12 +51,12 @@ class multiScraperGUI(storageHandler):
         crawlButton.place(relx=0.25, rely=0.45, relheight=0.1, relwidth=0.5)
 
         # Review Data Button
-        reviewButton = Button(mainMenuFrame, text="Review Data", command=lambda: [mainMenuFrame.place_forget(),self.productDetailsPage(mainGUI)])
+        reviewButton = Button(mainMenuFrame, text="Review Data", command=lambda: [mainMenuFrame.place_forget(), self.productDetailsPage(mainGUI)])
         reviewButton.config(font=("Arial", 30))
         reviewButton.place(relx=0.25, rely=0.60, relheight=0.1, relwidth=0.5)
 
         #Favourites Button
-        favouritesButton = Button(mainMenuFrame, text="Favourites", command=lambda: [mainMenuFrame.place_forget(),self.favouritesPage(mainGUI)])
+        favouritesButton = Button(mainMenuFrame, text="Favourites", command=lambda: [mainMenuFrame.place_forget(), self.favouritesPage(mainGUI)])
         favouritesButton.config(font=("Arial", 30))
         favouritesButton.place(relx=0.25, rely=0.75, relheight=0.1, relwidth=0.5)
 
@@ -114,7 +113,7 @@ class multiScraperGUI(storageHandler):
 
         # submit button
         submitButton = Button(crawlerFrame, text="Submit", command=lambda: [
-            [crawlerFrame.place_forget(),self.callScrape(mainGUI, search_parameter, checked_amazon.get(), checked_shopee.get(), itemQuantityScroller.get())] if (checked_shopee.get() == 1 or checked_amazon.get() == 1) and search_parameter.get() != "" else [
+            [crawlerFrame.place_forget(), self.callScrape(mainGUI, search_parameter, checked_amazon.get(), checked_shopee.get(), itemQuantityScroller.get())] if (checked_shopee.get() == 1 or checked_amazon.get() == 1) and search_parameter.get() != "" else [
                 invalidMsg.place(relx=0.7, rely=0.2, relheight=0.1, relwidth=0.3)]])
 
         submitButton.config(font=("Arial", 25))
@@ -126,8 +125,8 @@ class multiScraperGUI(storageHandler):
 
         #Item quantity scroller description
         itemQuantityScrollerDesc = tkinter.Label(crawlerFrame,
-                                   text="Number of products to scrape from each website",
-                                   bg=self.mainBackground)
+                                                 text="Number of products to scrape from each website",
+                                                 bg=self.mainBackground)
         itemQuantityScrollerDesc.config(font=("MS Sans Serif", 15))
         itemQuantityScrollerDesc.place(relx=0.3, rely=0.40, relheight=0.05, relwidth=0.35)
 
@@ -160,7 +159,7 @@ class multiScraperGUI(storageHandler):
         warningMsg.place(relx=0, rely=0.3, relheight=0.2, relwidth=1)
 
         reviewButton = Button(callScrapeFrame, text="Review Data",
-                            command=lambda: [callScrapeFrame.place_forget(), self.productDetailsPage(mainGUI)])
+                              command=lambda: [callScrapeFrame.place_forget(), self.productDetailsPage(mainGUI)])
         reviewButton.config(font=("Arial", 30))
         reviewButton.place(relx=0.25, rely=0.80, relheight=0.1, relwidth=0.5)
 
@@ -189,8 +188,8 @@ class multiScraperGUI(storageHandler):
         productDetailsFrame.place(relx=0, rely=0, relheight=1, relwidth=1)
 
         title = tkinter.Label(productDetailsFrame,
-                                   text="Product Details",
-                                   bg=self.mainBackground)
+                              text="Product Details",
+                              bg=self.mainBackground)
         title.config(font=("MS Sans Serif", 40))
         title.place(relx=0, rely=0, relheight=0.1, relwidth=1)
 
@@ -229,22 +228,22 @@ class multiScraperGUI(storageHandler):
         saveInfo.place(relx=0.6, rely=0.6, relheight=0.05, relwidth=0.4)
 
         #Sort Button
-        sortButton = Button(productDetailsFrame, text="SORT", command=lambda: [storageHandler().sortParams(sortVariable.get(), itemList)])
+        sortButton = Button(productDetailsFrame, text="SORT", command=lambda: [storageHandler().sortParams(sortVariable.get(), itemList,0)])
         sortButton.config(font=("Arial", 20))
         sortButton.place(relx=0.4, rely=0.65, relheight=0.05, relwidth=0.1)
 
         #Main Menu button
-        mainMenuButton = Button(productDetailsFrame, text="Main Menu", command=lambda: [productDetailsFrame.place_forget(),self.mainMenu(mainGUI)])
+        mainMenuButton = Button(productDetailsFrame, text="Main Menu", command=lambda: [productDetailsFrame.place_forget(), self.mainMenu(mainGUI)])
         mainMenuButton.config(font=("Arial", 30))
         mainMenuButton.place(relx=0.05, rely=0.85, relheight=0.1, relwidth=0.2)
 
         #Favourites Button
-        savesButton = Button(productDetailsFrame, text="Saved Products", command=lambda: [productDetailsFrame.place_forget(),self.favouritesPage(mainGUI)])
+        savesButton = Button(productDetailsFrame, text="Saved Products", command=lambda: [productDetailsFrame.place_forget(), self.favouritesPage(mainGUI)])
         savesButton.config(font=("Arial", 30))
         savesButton.place(relx=0.37, rely=0.85, relheight=0.1, relwidth=0.25)
 
         #ReCrawl Button
-        reCrawlButton = Button(productDetailsFrame, text="reCrawl", command=lambda: [productDetailsFrame.place_forget(),self.crawlerPage(mainGUI)])
+        reCrawlButton = Button(productDetailsFrame, text="reCrawl", command=lambda: [productDetailsFrame.place_forget(), self.crawlerPage(mainGUI)])
         reCrawlButton.config(font=("Arial", 30))
         reCrawlButton.place(relx=0.75, rely=0.85, relheight=0.1, relwidth=0.2)
 
@@ -254,7 +253,7 @@ class multiScraperGUI(storageHandler):
         saveButton.place(relx=0.7, rely=0.66, relheight=0.05, relwidth=0.2)
 
         #check Review Button
-        checkReviewButton = Button(productDetailsFrame, text="Check reviews", command=lambda: [(productDetailsFrame.place_forget(),self.reviewsPage(mainGUI,itemList.item(itemList.selection())['values'])) if itemList.item(itemList.selection())['values'] != "" else 0])
+        checkReviewButton = Button(productDetailsFrame, text="Check reviews", command=lambda: [(productDetailsFrame.place_forget(),self.reviewsPage(mainGUI, itemList.item(itemList.selection())['values'])) if itemList.item(itemList.selection())['values'] != "" else 0])
         checkReviewButton.config(font=("Arial", 15))
         checkReviewButton.place(relx=0.7, rely=0.72, relheight=0.05, relwidth=0.25)
 
@@ -269,8 +268,8 @@ class multiScraperGUI(storageHandler):
         favouritesFrame.place(relx=0, rely=0, relheight=1, relwidth=1)
 
         title = tkinter.Label(favouritesFrame,
-                                   text="🌟 Saved Products 🌟",
-                                   bg=self.mainBackground)
+                              text="🌟 Saved Products 🌟",
+                              bg=self.mainBackground)
         title.config(font=("MS Sans Serif", 40))
         title.place(relx=0, rely=0, relheight=0.1, relwidth=1)
 
@@ -290,24 +289,24 @@ class multiScraperGUI(storageHandler):
         storageHandler().showFavourites(itemList)
 
         #Main Menu
-        mainMenuButton = Button(favouritesFrame, text="Main Menu", command=lambda: [favouritesFrame.place_forget(),self.mainMenu(mainGUI)])
+        mainMenuButton = Button(favouritesFrame, text="Main Menu", command=lambda: [favouritesFrame.place_forget(), self.mainMenu(mainGUI)])
         mainMenuButton.config(font=("Arial", 30))
         mainMenuButton.place(relx=0.05, rely=0.85, relheight=0.1, relwidth=0.2)
 
         #Review Button
-        reviewButton = Button(favouritesFrame, text="Review Data", command=lambda: [favouritesFrame.place_forget(),self.productDetailsPage(mainGUI)])
+        reviewButton = Button(favouritesFrame, text="Review Data", command=lambda: [favouritesFrame.place_forget(), self.productDetailsPage(mainGUI)])
         reviewButton.config(font=("Arial", 30))
         reviewButton.place(relx=0.37, rely=0.85, relheight=0.1, relwidth=0.25)
 
         #ReCrawl Button
-        reCrawlButton = Button(favouritesFrame, text="reCrawl", command=lambda: [favouritesFrame.place_forget(),self.crawlerPage(mainGUI)])
+        reCrawlButton = Button(favouritesFrame, text="reCrawl", command=lambda: [favouritesFrame.place_forget(), self.crawlerPage(mainGUI)])
         reCrawlButton.config(font=("Arial", 30))
         reCrawlButton.place(relx=0.75, rely=0.85, relheight=0.1, relwidth=0.2)
 
         #delete all Button
         deleteAllButton = Button(favouritesFrame, text="DELETE ALL", command=lambda: [storageHandler().deleteAllFavourites(itemList)])
-        deleteAllButton.config(font=("Arial", 20))
-        deleteAllButton.place(relx=0.05, rely=0.7, relheight=0.08, relwidth=0.20)
+        deleteAllButton.config(font=("Arial", 15))
+        deleteAllButton.place(relx=0.05, rely=0.75, relheight=0.05, relwidth=0.20)
 
         # Delete particular product
         deleteProductButton = Button(favouritesFrame, text="Delete Product", command=lambda: [(storageHandler().deleteSavedProduct(itemList.item(itemList.selection())['values'],itemList)) if itemList.item(itemList.selection())['values'] != "" else 0])
@@ -315,9 +314,26 @@ class multiScraperGUI(storageHandler):
         deleteProductButton.place(relx=0.37, rely=0.7, relheight=0.08, relwidth=0.20)
 
         #Check reviews
-        checkReviewButton = Button(favouritesFrame, text="Check reviews", command=lambda: [(favouritesFrame.place_forget(),self.reviewsPage(mainGUI,itemList.item(itemList.selection())['values'])) if itemList.item(itemList.selection())['values'] != "" else 0])
+        checkReviewButton = Button(favouritesFrame, text="Check reviews", command=lambda: [(favouritesFrame.place_forget(),self.reviewsPage(mainGUI, itemList.item(itemList.selection())['values'])) if itemList.item(itemList.selection())['values'] != "" else 0])
         checkReviewButton.config(font=("Arial", 15))
         checkReviewButton.place(relx=0.7, rely=0.72, relheight=0.05, relwidth=0.25)
+
+        #Sorting Options
+        sortVariable = StringVar()
+        sortVariable.set("None")
+        sortOptions = OptionMenu(favouritesFrame, sortVariable,"None", "ID", "Name", "Price", "Rating", "Rating Count", "Stock Info")
+        sortOptions.place(relx=0.05,rely=0.63, relheight=0.05, relwidth=0.12)
+        sortOptions.config(font=("MS Sans Serif", 15))
+
+        #Sort Text
+        title = tkinter.Label(favouritesFrame, text="Sort By: ", bg=self.mainBackground)
+        title.config(font=("MS Sans Serif", 20))
+        title.place(relx=0.15, rely=0.63, relheight=0.05, relwidth=0.1)
+
+        #Sort Button
+        sortButton = Button(favouritesFrame, text="SORT", command=lambda: [storageHandler().sortParams(sortVariable.get(), itemList,1)])
+        sortButton.config(font=("Arial", 20))
+        sortButton.place(relx=0.25, rely=0.63, relheight=0.05, relwidth=0.1)
 
     def reviewsPage(self, mainGUI, itemID):
         """This function constructs a page that displays reviews of a product selected by a user
@@ -350,12 +366,12 @@ class multiScraperGUI(storageHandler):
 
 
         #Back Button
-        backButton = Button(reviewsFrame, text="Back", command=lambda: [reviewsFrame.place_forget(),self.productDetailsPage(mainGUI)])
+        backButton = Button(reviewsFrame, text="Back", command=lambda: [reviewsFrame.place_forget(), self.productDetailsPage(mainGUI)])
         backButton.config(font=("Arial", 30))
         backButton.place(relx=0.2, rely=0.85, relheight=0.1, relwidth=0.25)
 
         #Sentiment Analysis Button
-        reviewButton = Button(reviewsFrame, text="Sentiment Analysis", command=lambda: [reviewsFrame.place_forget(),self.sentimentPage(mainGUI,itemID)])
+        reviewButton = Button(reviewsFrame, text="Sentiment Analysis", command=lambda: [reviewsFrame.place_forget(), self.sentimentPage(mainGUI, itemID)])
         reviewButton.config(font=("Arial", 30))
         reviewButton.place(relx=0.6, rely=0.85, relheight=0.1, relwidth=0.3)
 
@@ -391,7 +407,7 @@ class multiScraperGUI(storageHandler):
         itemList.place(relx=0, rely=0.1, relheight=0.5, relwidth=1)
 
         #Back Button
-        backButton = Button(sentimentFrame, text="Back", command=lambda: [sentimentFrame.place_forget(),self.reviewsPage(mainGUI, itemID)])
+        backButton = Button(sentimentFrame, text="Back", command=lambda: [sentimentFrame.place_forget(), self.reviewsPage(mainGUI, itemID)])
         backButton.config(font=("Arial", 30))
         backButton.place(relx=0.35, rely=0.85, relheight=0.1, relwidth=0.25)
 
