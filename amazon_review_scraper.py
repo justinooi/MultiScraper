@@ -20,9 +20,7 @@ class amazon_review_scraper:
     def asynchronousProcessing(self):
         """Aynsc function that waits scraps all the review of the selected product fron the GUI.
                 asession : creates a html session for the scarping of data
-                NUMBER_OF_LAMBDA_FUNCTIONS : set the limit of request calls wanted per cycle 
         """
-        NUMBER_OF_LAMBDA_FUNCTIONS = 5
         asession = AsyncHTMLSession()
 
         asession.run(  # Calls 5 requests (PROCESSES) in 1 go
@@ -38,10 +36,11 @@ class amazon_review_scraper:
 
         Args:
             links ([Int]): Unique ID of the product.
-            asession ([object]): Create a session for the html page.
+            asession ([object]): Parse a session for the html page.
             rating ([string]): Rating from the reviews that are scraped.
-            reviews_scrape ([string]) : comment of the reviews that are scraped 
         """
+
+        # Simple function to determine number of pages to scrape.
         def review_pages(string):
             n = int(string)
             a = (n // 10)
@@ -53,6 +52,7 @@ class amazon_review_scraper:
 
             return a
 
+        # Determine star setting for scraping.
         if rating == 5:
             star = 'five_star'
         elif rating == 4:
@@ -67,16 +67,20 @@ class amazon_review_scraper:
         pagenumber = 1
         url = 'https://www.amazon.com/product-reviews/' + links + '/ref=cm_cr_arp_d_viewopt_sr?ie=UTF8&reviewerType=all_reviews&pageNumber=' + str(pagenumber) + '&sortBy=recent&filterByStar=' + star
 
+        # Request the URL using the session.
         webpage = await asession.get(url, headers=self.HEADERS)
         await webpage.html.arender(sleep=1, timeout=50)
         soup = BeautifulSoup(webpage.content, "lxml")
 
+        # Find available number of pages to scrape.
         count = soup.find('div', attrs={'class':'a-row a-spacing-base a-size-base'})
         rating_count = count.text.split('|')
         real_count = review_pages(re.sub('\D', '', str(rating_count[1])))
 
+        # For loop for scraping reviews.
         for i in range(1, real_count+1):
 
+            # Sort by star setting and recent.
             url = 'https://www.amazon.com/product-reviews/' + links + '/ref=cm_cr_arp_d_viewopt_sr?ie=UTF8&reviewerType=all_reviews&pageNumber=' + str(i) + '&sortBy=recent&filterByStar=' + star
 
             webpage_scrape = await asession.get(url, headers=self.HEADERS)
@@ -84,6 +88,8 @@ class amazon_review_scraper:
             soup = BeautifulSoup(webpage_scrape.content, "lxml")
 
             reviews_scrape = soup.find_all('span', attrs={'class': 'a-size-base review-text review-text-content'})
+
+            # Parse all reviews through text cleaning.
             for r in reviews_scrape:
                 review_stripped = re.sub('\s{2,}', ' ', r.text)
                 self.reviews[rating-1].append(review_stripped)
