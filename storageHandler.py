@@ -18,8 +18,6 @@ class storageHandler:
         self.deleteAll(itemList)
         self.csvReader(0)
         self.displayItems(itemList)
-        with open('savedItems.csv','a') as fw:
-            pass
 
     def sortParams(self, input, itemList, sortflag):
         """Manages the sorting of products
@@ -130,21 +128,22 @@ class storageHandler:
             
         elif sortflag == 1:
             try:
-                with open('savedItems.csv', 'r', newline='',
-                          encoding='utf-8') as savedItemsIO:
-                    for row in savedItemsIO:
-                        if '"\r\n' not in row:
-                            self.items.append(row.split(","))
+                with open('saveditems.csv', 'r', newline='',
+                        encoding='utf-8') as items:  # Opens saveditems.csv file (must be same directory as this program)
+                    for row in items:
+                        if ("N/A" not in row) and ("IGNORE" not in row): #Rejects invalid data
+                            if str(row.split(",")[0]) not in str(self.items): #Removes duplicates via ID
+                                self.items.append(list(row.split(",")))
             except:
                 pass
 
 
-        if sortflag == 0:
-            for i in range(len(self.items)):
-                self.items[i][3] = self.items[i][3].replace("out of 5 stars","")
-                self.items[i][4] = self.items[i][4].replace("ratings","")
-                if self.items[i][5] == "\r\n":  # Removes NULL values
-                    self.items[i][5] = "0"
+
+        for i in range(len(self.items)):
+            self.items[i][3] = self.items[i][3].replace("out of 5 stars","")
+            self.items[i][4] = self.items[i][4].replace("ratings","")
+            if self.items[i][5] == "\r\n":  # Removes NULL values
+                self.items[i][5] = "0"
 
     def displayItems(self, itemList):
         """Displays the items after sorting
@@ -209,9 +208,6 @@ class storageHandler:
             itemList (treeview): the details of the saved products
         """
         savedItem = []
-
-        # Create savedItems.csv if not created.
-
         try:
             with open('savedItems.csv', 'r', newline='',
                   encoding='utf-8') as savedItemsIO:
