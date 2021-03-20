@@ -207,6 +207,11 @@ class storageHandler:
             itemList (treeview): the details of the saved products
         """
         savedItem = []
+
+        # Create savedItems.csv if not created.
+        with open('savedItems.csv','w') as fw:
+            pass
+
         try:
             with open('savedItems.csv', 'r', newline='',
                   encoding='utf-8') as savedItemsIO:
