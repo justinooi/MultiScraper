@@ -7,7 +7,7 @@ from Amazon_Scraper import Amazon_Scraper
 from storageHandler import storageHandler
 import time
 
-class multiScraperGUI(storageHandler):
+class multiScraperGUI():
     """This class manages the overall GUI of this program. Widgets from the Tkinter library were used to construct the overall GUI.
     
     """
