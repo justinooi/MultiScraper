@@ -423,5 +423,5 @@ class multiScraperGUI():
         storageHandler().readSentiment(itemID[0], itemList)
 
 if __name__ == '__main__':
-    main_GUI = multiScraperGUI()
-    main_GUI.initGUI()
+    main_GUI = multiScraperGUI() #Instantiates a multiScraperGUI
+    main_GUI.initGUI() #Calls the initGUI() method from the multiScraperGUI() class which starts up the GUI
