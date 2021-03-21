@@ -11,7 +11,7 @@ class multiScraperGUI():
     """This class manages the overall GUI of this program. Widgets from the Tkinter library were used to construct the overall GUI.
     
     """
-    mainBackground = 'LightSteelBlue1'
+    mainBackground = 'LightSteelBlue1' # Sets mainBackground colour
 
     def initGUI(self):
         """This method initializes a GUI window with a size of 1300 by 700
@@ -80,7 +80,7 @@ class multiScraperGUI():
         crawlerFrame = tkinter.Frame(mainGUI, bg=self.mainBackground)
         crawlerFrame.place(relx=0, rely=0, relheight=1, relwidth=1)
 
-        # Question
+        # Question to the user
         title = tkinter.Label(crawlerFrame, text="Enter product to scrape", bg=self.mainBackground)
         title.config(font=("Arial", 30))
         title.place(relx=0, rely=0.05, relheight=0.2, relwidth=1)
