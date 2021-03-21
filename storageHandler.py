@@ -76,7 +76,7 @@ class storageHandler:
     def sortByName(self):
         """This function sorts products by name
         """
-        self.items.sort(key=lambda x: str(x[1]), reverse=False)
+        self.items.sort(key=lambda x: str(x[1]), reverse=True)
 
     def sortByPrice(self):
         """This function sorts products by price
