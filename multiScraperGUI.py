@@ -183,7 +183,7 @@ class multiScraperGUI():
 
 
     def productDetailsPage(self, mainGUI):
-        """This method constructs a page that displays product details
+        """This method constructs a page that displays product details 
         
         Args:
             mainGUI (object): The GUI instance
@@ -237,9 +237,9 @@ class multiScraperGUI():
         sortButton.place(relx=0.35, rely=0.65, relheight=0.05, relwidth=0.1)
 
         #View Button
-        sortButton = Button(productDetailsFrame, text="Open In Browser",command=lambda: [storageHandler().openURL(itemList.item(itemList.selection())['values'])])
-        sortButton.config(font=("Arial", 10))
-        sortButton.place(relx=0.475, rely=0.65, relheight=0.05, relwidth=0.1)
+        viewURLButton = Button(productDetailsFrame, text="Open In Browser",command=lambda: [storageHandler().openURL(itemList.item(itemList.selection())['values'])])
+        viewURLButton.config(font=("Arial", 15))
+        viewURLButton.place(relx=0.475, rely=0.65, relheight=0.05, relwidth=0.12)
 
         #Main Menu button
         mainMenuButton = Button(productDetailsFrame, text="Main Menu", command=lambda: [productDetailsFrame.place_forget(), self.mainMenu(mainGUI)])
@@ -268,7 +268,7 @@ class multiScraperGUI():
 
 
     def favouritesPage(self, mainGUI):
-        """This method constructs a page that displays products saved by users
+        """This method constructs a page that displays products saved by users 
         
         Args:
             mainGUI (object): The GUI instance
@@ -344,8 +344,13 @@ class multiScraperGUI():
         sortButton.config(font=("Arial", 20))
         sortButton.place(relx=0.25, rely=0.63, relheight=0.05, relwidth=0.1)
 
+        #View Button
+        viewURLButton = Button(favouritesFrame, text="Open In Browser",command=lambda: [storageHandler().openURL(itemList.item(itemList.selection())['values'])])
+        viewURLButton.config(font=("Arial", 15))
+        viewURLButton.place(relx=0.6, rely=0.63, relheight=0.05, relwidth=0.12)
+
     def reviewsPage(self, mainGUI, itemID):
-        """This method constructs a page that displays reviews of a product selected by a user
+        """This method constructs a page that displays reviews of a product selected by a user 
         
         Args:
             mainGUI (object): The GUI instance
@@ -392,16 +397,18 @@ class multiScraperGUI():
             itemID (str): Product ID
 
         """
-
+        
         sentimentFrame = tkinter.Frame(mainGUI, bg=self.mainBackground)
         sentimentFrame.place(relx=0, rely=0, relheight=1, relwidth=1)
-
+        
+        #Sentiment Analysis title
         title = tkinter.Label(sentimentFrame,
                               text="Sentiment Analysis",
                               bg=self.mainBackground)
         title.config(font=("MS Sans Serif", 40))
         title.place(relx=0, rely=0, relheight=0.1, relwidth=1)
-
+        
+        #Treeview widget
         item_column = ('No.','Rating', 'Review', 'Sentiment', 'Confidence')
         itemList = ttk.Treeview(sentimentFrame, columns=item_column, show='headings')
         for i in range(len(item_column)):
