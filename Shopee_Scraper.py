@@ -3,7 +3,7 @@ from shopee_review_scraper import shopee_review_scraper
 from shopee_product_scraper import shopee_product_scraper
 
 class Shopee_Scraper(shopee_product_scraper, shopee_link_scraper, shopee_review_scraper):
-    """This class inherits all abstract classes and methods for the functions of GUI 
+    """This class inherits all abstract classes and methods for the methods of GUI 
 
     Args:
         shopee_product_scraper (subclass): child class which allows access to all methods in the class
@@ -15,7 +15,7 @@ class Shopee_Scraper(shopee_product_scraper, shopee_link_scraper, shopee_review_
         self.scraper = 'Shopee'
 
     def linkScrape(self, searchParameter, itemQuantity):
-        """This function is called upon clicking the submit button, managing the calling of various functions in the base class, 
+        """This method is called upon clicking the submit button, managing the calling of various methods in the base class, 
            userInput(): to pass in searchParameter and itemQuantity for encapsulation
            linkSearch(): to retrieve the unique identifier of products 
 
@@ -24,7 +24,7 @@ class Shopee_Scraper(shopee_product_scraper, shopee_link_scraper, shopee_review_
             itemQuantity (int): number of items
 
         Returns:
-            function -> str: calls the function storeUrl() 
+            method -> str: calls the method storeUrl() 
         """
 
         super().userInput(searchParameter, itemQuantity)
@@ -32,7 +32,7 @@ class Shopee_Scraper(shopee_product_scraper, shopee_link_scraper, shopee_review_
         return super().storeUrl()
 
     def productScrape(self, url_file):
-        """This function is called upon clicking the submit button, managing the calling of various functions in other sub classes, 
+        """This method is called upon clicking the submit button, managing the calling of various methods in other sub classes, 
            shopee_product_scraper class:
                 init class with file, links, results and attributes
                 get_product_links(): to get and store the links of the products
@@ -42,7 +42,7 @@ class Shopee_Scraper(shopee_product_scraper, shopee_link_scraper, shopee_review_
             url_file (str): text file that was returned from linkScrape()
 
         Returns:
-            function : calls the function store_product_details() 
+            method : calls the method store_product_details() 
         """
 
         shopee_product_scraper.__init__(self, url_file)
@@ -51,7 +51,7 @@ class Shopee_Scraper(shopee_product_scraper, shopee_link_scraper, shopee_review_
         return shopee_product_scraper.store_product_details(self)
         
     def reviewScrape(self, url):
-        """This function is called upon clicking the submit button, managing the calling of various functions in other sub classes,
+        """This method is called upon clicking the submit button, managing the calling of various methods in other sub classes,
            shoppee_review_scraper class:
                 init class with file, links, results and attributes
                 asynchronousProcessing(): to wait for a specified number of tasks to complete before continuing the review scaping and store it to a text file     
@@ -65,7 +65,7 @@ class Shopee_Scraper(shopee_product_scraper, shopee_link_scraper, shopee_review_
         shopee_review_scraper.store_product_reviews(self)
 
     def reviewScrapeAll(self, url_file):
-        """This function opens the saved data file of products that is scraped and saved by the user.
+        """This method opens the saved data file of products that is scraped and saved by the user.
 
         Args:
             url_file (String): The file path of the saved data file of the user scraped data 
