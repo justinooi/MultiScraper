@@ -17,51 +17,55 @@ class multiScraperGUI():
         """This function initializes a GUI window with a size of 1300 by 700
         
         """
+        
         mainGUI = tkinter.Tk(className='MultiScraper')  # Sets window name
         mainGUI.geometry("1300x700+100+50")  # Sets window size
-        mainGUI.configure(bg=self.mainBackground)
-        mainGUI.resizable(width=False, height=False)
-        self.mainMenu(mainGUI)
-        mainGUI.mainloop()  # Run the GUI
+        mainGUI.configure(bg=self.mainBackground) #Sets GUI background color
+        mainGUI.resizable(width=False, height=False) #Disallows user from resizing the window.
+        self.mainMenu(mainGUI) #Calls the mainMenu() method which initializes the mainmenu screen
+        mainGUI.mainloop()  # Starts up and runs the GUI until user exits
 
     def mainMenu(self, mainGUI):
-        """This function constructs the main menu
-
+        """This function constructs the main menu with the use of the frame widget from the tkinter library. The purpose of the Frame widget is to group and organize widgets
+        such as buttons, labels, treeview, etc. in a friendly way. It works like a container, which is responsible for arranging other widgets. As users enter another page,
+        the widgets of the previous page have to be deinitialized with the place_forget() method from the tkinter library. Since we grouped the buttons, labels, treeview, etc. widgets
+        into one frame, we only have to deinitialize the frame itself.
         Args:
-            mainGUI (object): The GUI instance
+            mainGUI (object): The GUI instance 
 
         """
+        #Initializes a frame on the GUI dedicated to the main menu.
         mainMenuFrame = tkinter.Frame(mainGUI, bg=self.mainBackground)
         mainMenuFrame.place(relx=0.1, rely=0, relheight=0.9, relwidth=0.8)
 
-        # Title
+        # Title Display
         title = tkinter.Label(mainMenuFrame, text="MultiScraper", bg=self.mainBackground)
         title.config(font=("MS Sans Serif", 70))
         title.place(relx=0.1, rely=0.05, relheight=0.2, relwidth=0.8)
 
-        # Description
+        # Description Display
         title = tkinter.Label(mainMenuFrame, text="Crawls/Scrapes Amazon and Shopee", bg=self.mainBackground)
         title.config(font=("MS Sans Serif", 20))
         title.place(relx=0, rely=0.23, relheight=0.05, relwidth=1)
 
-        # Crawl Button
+        # Displays the 'Crawl' button. Upon clicking the button, user will head to the crawl page and the the main menu frame widget gets deinitialized.
         crawlButton = Button(mainMenuFrame, text="Crawl",
                              command=lambda: [self.crawlerPage(mainGUI), mainMenuFrame.place_forget()])
         crawlButton.config(font=("Arial", 30))
         crawlButton.place(relx=0.25, rely=0.45, relheight=0.1, relwidth=0.5)
 
-        # Review Data Button
+        # Displays the 'Review Data' button. Upon clicking the button, user will head to the review products page and the the main menu frame widget gets deinitialized.
         reviewButton = Button(mainMenuFrame, text="Review Data", command=lambda: [mainMenuFrame.place_forget(), self.productDetailsPage(mainGUI)])
         reviewButton.config(font=("Arial", 30))
         reviewButton.place(relx=0.25, rely=0.60, relheight=0.1, relwidth=0.5)
 
-        #Favourites Button
+        # Displays the 'Review Data' button. Upon clicking the button, user will head to the review products page and the the main menu frame widget gets deinitialized.
         favouritesButton = Button(mainMenuFrame, text="Favourites", command=lambda: [mainMenuFrame.place_forget(), self.favouritesPage(mainGUI)])
         favouritesButton.config(font=("Arial", 30))
         favouritesButton.place(relx=0.25, rely=0.75, relheight=0.1, relwidth=0.5)
 
-        # Exit Button
-        exitButton = Button(mainMenuFrame, text="Exit", command=lambda: exit(1))
+        # Displays 'Exit' button. Upon clicking the button, the program exits
+        exitButton = Button(mainMenuFrame, text="Exit", command=lambda: exit(0))
         exitButton.config(font=("Arial", 30))
         exitButton.place(relx=0.25, rely=0.90, relheight=0.1, relwidth=0.5)
 
