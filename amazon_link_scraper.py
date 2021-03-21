@@ -12,7 +12,7 @@ class amazon_link_scraper(abstract_link_scraper):
     """
 
     def linkSearch(self):
-        """This function extracts all the unique id from the URL which will be the product ID to scrape from.
+        """This method extracts all the unique id from the URL which will be the product ID to scrape from.
         """
         self.links_list = []
         # Retrieve all product ASIN (unique product ID)
@@ -35,7 +35,7 @@ class amazon_link_scraper(abstract_link_scraper):
                         asin = re.search(r'/[dg]p/([^/]+)', link, flags=re.IGNORECASE).group(1)
                         self.links_list.append(asin)
                     counter=counter+1
-                    if counter == self.itemQuantity:
+                    if counter == self.itemQuantity: #Once the counter variable reaches its threshold, which is the user's quantity input, break the loop.
                         break
 
             self.storeUrl()
@@ -44,12 +44,12 @@ class amazon_link_scraper(abstract_link_scraper):
             links = []
 
     def storeUrl(self):
-        """This function stores all the unique ID to a file into the specified directory
+        """This method stores all the unique ID to a file into the specified directory
 
         Returns:
             [String]: return the file name that the data is stored in.
         """
-        with open('amazon_urls.txt', 'w') as url_storage:
+        with open('amazon_urls.txt', 'w') as url_storage: #Stores item IDs into a text file.
             for link in self.links_list:
                 url_storage.write(link + '\n')
         return 'amazon_urls.txt'
