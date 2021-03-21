@@ -7,10 +7,9 @@ class Sentiment_Analysis:
     """
     sentiment = []
     confidence = []
-    reviewID = ''
 
     def analyze(self, itemID):
-        """This function analyzes reviews from the scraped review data and give a sentimental analysis of the review
+        """This method analyzes reviews from the scraped review data and give a sentimental analysis of the review
 
         Args:
             itemID ([int]): Unique product ID of the product that the user want to review analyze.
@@ -43,5 +42,5 @@ class Sentiment_Analysis:
 
 
 
-        df.to_csv('sentiments/' + itemID)
+        df.to_csv('sentiments/' + itemID) #stores sentiments of reviews in a csv file into the 'sentiments/' file location
 
