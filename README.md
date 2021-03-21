@@ -21,7 +21,15 @@ import multiScraperGUI
  main_GUI.initGUI() # Calls the initGUI() method from the multiScraperGUI() class which starts up the GUI.
 ```
 
+## Errors & Other Information
+
+First time usage may result in error due to lack of cached files or uninstalled modules (eg. selenium, flair models, etc.)
+
 Tested on Windows 10 only.
+
+## Documentation
+
+Drive Download: https://drive.google.com/file/d/1H28qqYjCCFjuK0eIT4NdnuFrAJwOBMrB/view?usp=sharing
 
 ## Team
 Done by Team 23 of CSC1009 of SIT-UofG Computing Science (AY 20/21)
