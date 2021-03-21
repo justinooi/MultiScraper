@@ -14,7 +14,7 @@ class multiScraperGUI():
     mainBackground = 'LightSteelBlue1'
 
     def initGUI(self):
-        """This function initializes a GUI window with a size of 1300 by 700
+        """This method initializes a GUI window with a size of 1300 by 700
         
         """
         
@@ -26,7 +26,7 @@ class multiScraperGUI():
         mainGUI.mainloop()  # Starts up and runs the GUI until user exits
 
     def mainMenu(self, mainGUI):
-        """This function constructs the main menu with the use of the frame widget from the tkinter library. The purpose of the Frame widget is to group and organize widgets
+        """This method constructs the main menu with the use of the frame widget from the tkinter library. The purpose of the Frame widget is to group and organize widgets
         such as buttons, labels, treeview, etc. in a friendly way. It works like a container, which is responsible for arranging other widgets. As users enter another page,
         the widgets of the previous page have to be deinitialized with the place_forget() method from the tkinter library. Since we grouped the buttons, labels, treeview, etc. widgets
         into one frame, we only have to deinitialize the frame itself.
