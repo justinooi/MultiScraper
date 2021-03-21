@@ -70,7 +70,7 @@ class multiScraperGUI():
         exitButton.place(relx=0.25, rely=0.90, relheight=0.1, relwidth=0.5)
 
     def crawlerPage(self, mainGUI):
-        """This function constructs the crawl page
+        """This method constructs a crawl page. Users can enter a search parameter, choose either Shopee, Amazon or both and set the product quantity to scrape from.
 
         Args:
             mainGUI (object): The GUI instance
@@ -141,7 +141,7 @@ class multiScraperGUI():
         backButton.place(relx=0.25, rely=0.80, relheight=0.1, relwidth=0.5)
 
     def callScrape(self, mainGUI, search_parameter, checked_amazon, checked_shopee, itemQuantity):
-        """This function constructs a page that informs the user that the program has finished scraping
+        """This method constructs a page that informs the user that the program has finished scraping
 
         Args:
             mainGUI (object): The GUI instance
@@ -183,7 +183,7 @@ class multiScraperGUI():
 
 
     def productDetailsPage(self, mainGUI):
-        """This function constructs a page that displays product details
+        """This method constructs a page that displays product details
         
         Args:
             mainGUI (object): The GUI instance
@@ -268,7 +268,7 @@ class multiScraperGUI():
 
 
     def favouritesPage(self, mainGUI):
-        """This function constructs a page that displays products saved by users
+        """This method constructs a page that displays products saved by users
         
         Args:
             mainGUI (object): The GUI instance
@@ -345,7 +345,7 @@ class multiScraperGUI():
         sortButton.place(relx=0.25, rely=0.63, relheight=0.05, relwidth=0.1)
 
     def reviewsPage(self, mainGUI, itemID):
-        """This function constructs a page that displays reviews of a product selected by a user
+        """This method constructs a page that displays reviews of a product selected by a user
         
         Args:
             mainGUI (object): The GUI instance
@@ -385,7 +385,7 @@ class multiScraperGUI():
         reviewButton.place(relx=0.6, rely=0.85, relheight=0.1, relwidth=0.3)
 
     def sentimentPage(self, mainGUI, itemID):
-        """This function constructs a page that displays sentiments of reviews
+        """This method constructs a page that displays sentiments of reviews
         
         Args:
             mainGUI (object): The GUI instance
@@ -423,5 +423,5 @@ class multiScraperGUI():
         storageHandler().readSentiment(itemID[0], itemList)
 
 if __name__ == '__main__':
-    main_GUI = multiScraperGUI() #Instantiates a multiScraperGUI
+    main_GUI = multiScraperGUI() #Instantiates a multiScraperGUI object.
     main_GUI.initGUI() #Calls the initGUI() method from the multiScraperGUI() class which starts up the GUI
