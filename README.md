@@ -17,9 +17,11 @@ Simply run MultiScraperGUI.py or you can initialize your own multiScraper class 
 ```python
 import multiScraperGUI
 
- main_GUI = multiScraperGUI() #Instantiates a multiScraperGUI object.
- main_GUI.initGUI() #Calls the initGUI() method from the multiScraperGUI() class which starts up the GUI
+ main_GUI = multiScraperGUI() # Instantiates a multiScraperGUI object.
+ main_GUI.initGUI() # Calls the initGUI() method from the multiScraperGUI() class which starts up the GUI.
 ```
+
+Tested on Windows 10 only.
 
 ## Team
 Done by Team 23 of CSC1009 of SIT-UofG Computing Science (AY 20/21)
