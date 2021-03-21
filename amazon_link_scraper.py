@@ -5,14 +5,14 @@ import time
 import re
 
 class amazon_link_scraper(abstract_link_scraper):
-    """Link scraper gets all the Unique ID of the product search that is specified in the GUI by the user and store it to a file.
+    """This class gets all the Unique ID of the product search that is specified in the GUI by the user and store it to a file.
 
     Args:
         abstract_product_scraper (Object): user define abstract class defining the properties of how the product scaper should function.
     """
 
     def linkSearch(self):
-        """extracts all the unique id from the URL which will be the product ID to scrape from.
+        """This function extracts all the unique id from the URL which will be the product ID to scrape from.
         """
         self.links_list = []
         # Retrieve all product ASIN (unique product ID)
@@ -44,7 +44,7 @@ class amazon_link_scraper(abstract_link_scraper):
             links = []
 
     def storeUrl(self):
-        """Stores all the unique ID to a file into the specified directory
+        """This function stores all the unique ID to a file into the specified directory
 
         Returns:
             [String]: return the file name that the data is stored in.

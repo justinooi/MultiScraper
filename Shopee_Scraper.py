@@ -65,7 +65,7 @@ class Shopee_Scraper(shopee_product_scraper, shopee_link_scraper, shopee_review_
         shopee_review_scraper.store_product_reviews(self)
 
     def reviewScrapeAll(self, url_file):
-        """Open the saved data file of products that is scraped and saved by the user.
+        """This function opens the saved data file of products that is scraped and saved by the user.
 
         Args:
             url_file (String): The file path of the saved data file of the user scraped data 

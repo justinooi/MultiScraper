@@ -62,7 +62,7 @@ class Amazon_Scraper(amazon_product_scraper, amazon_link_scraper, amazon_review_
         amazon_review_scraper.store_product_reviews(self)
 
     def reviewScrapeAll(self, url_file):
-        """Open the saved data file of products that is scraped and saved by the user.
+        """This function opens the saved data file of products that is scraped and saved by the user.
 
         Args:
             url_file (String): The file path of the saved data file of the user scraped data 

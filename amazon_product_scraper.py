@@ -12,7 +12,7 @@ class amazon_product_scraper(abstract_product_scraper):
     """
 
     def __init__(self, url_file):
-        """Self defined variables for storage purposes
+        """This function is for self defined variables for storage purposes
 
         Args:
             url_file (string): file path 
@@ -23,13 +23,13 @@ class amazon_product_scraper(abstract_product_scraper):
         self.attributes = []
 
     def get_product_links(self):
-        """Get and seperates all product links and preparing the links for scraping.
+        """This function gets and seperates all product links and preparing the links for scraping.
         """
         with open(self.file) as file_reader:
             self.links = file_reader.read().splitlines()
 
     def asynchronousProcessing(self):
-        """Async file processes the links that are prepared and scrapes all the link in an async function awaiting request of 5 at a time.
+        """This function processes the links that are prepared and scrapes all the link in an async function awaiting request of 5 at a time.
                 asession : creates a html session for the scarping of data
                 NUMBER_OF_LAMBDA_FUNCTIONS : set the number of request calls wanted per cycle 
         """
@@ -134,7 +134,7 @@ class amazon_product_scraper(abstract_product_scraper):
         return tuple(items)
 
     def store_product_details(self):
-        """Stores all the details of the scraped product from the get_product_details function into a csv file 
+        """This function stores all the details of the scraped product from the get_product_details function into a csv file 
         """
         file_name = 'output-amazon.csv'
         with open(file_name, 'w', newline='', encoding='utf-8') as f:

@@ -11,7 +11,7 @@ class storageHandler:
     items = []
 
     def initialization(self, itemList):
-        """Refresh product details in the GUI
+        """This function refreshes product details in the GUI
 
         Args:
             itemList (treeview): the details of the products
@@ -23,7 +23,7 @@ class storageHandler:
             pass
 
     def sortParams(self, input, itemList, sortflag):
-        """Manages the sorting of products
+        """This function manages the sorting of products
 
         Args:
             input (str): user input of the type of sort
@@ -69,17 +69,17 @@ class storageHandler:
             self.displayItems(itemList)
 
     def sortByID(self):
-        """Sorting products by ID
+        """This function sorts products by ID
         """
         self.items.sort(key=lambda x: str(x[0]), reverse=True)
 
     def sortByName(self):
-        """Sorting products by name
+        """This function sorts products by name
         """
         self.items.sort(key=lambda x: str(x[1]), reverse=False)
 
     def sortByPrice(self):
-        """Sorting products by price
+        """This function sorts products by price
         """
         try:
             self.items.sort(key=lambda x: float(
@@ -88,7 +88,7 @@ class storageHandler:
             pass
 
     def sortByRating(self):
-        """Sorting products by rating
+        """This function sorts products by rating
         """
         try:
             self.items.sort(key=lambda x: float(x[3]), reverse=False)
@@ -96,7 +96,7 @@ class storageHandler:
             pass
 
     def sortByRatingQuantity(self):
-        """Sorting products by quantity
+        """This function sorts products by quantity
         """
         try:
             self.items.sort(key=lambda x: float(x[4] if self.is_number(x[5]) is True else x[4].replace('rating','')), reverse=False)
@@ -105,7 +105,7 @@ class storageHandler:
 
 
     def sortByQuantityLeft(self):
-        """Sorting products by remaining quantity
+        """This function sorts products by remaining quantity
         """
         try:
             self.items.sort(key=lambda x: float(x[5] if self.is_number(x[5]) is True else 0) , reverse=True)
@@ -113,7 +113,7 @@ class storageHandler:
             pass
 
     def csvReader(self,sortflag):
-        """Opens the csv files, reads and stores the data 
+        """This function opens the csv files, reads and stores the data 
         """
         self.items=[]
         if sortflag == 0:
@@ -157,7 +157,7 @@ class storageHandler:
                     self.items[i][5] = "0"
 
     def displayItems(self, itemList):
-        """Displays the items after sorting
+        """This function displays the items after sorting
 
         Args:
             itemList (treeview): the details of the products
@@ -166,7 +166,7 @@ class storageHandler:
             itemList.insert("", 0, values=(self.items[i]))
 
     def deleteAll(self, itemList):
-        """Clearing of the treeview data
+        """This function clears of the treeview data
 
         Args:
             itemList (treeview): the details of the products
@@ -174,7 +174,7 @@ class storageHandler:
         itemList.delete(*itemList.get_children())
 
     def saveData(self, savedItem):
-        """Saves the product details into a csv file
+        """This function saves the product details into a csv file
 
         Args:
             savedItem (treeview): the details of the saved products
@@ -213,7 +213,7 @@ class storageHandler:
             ctypes.windll.user32.MessageBoxW(0, "You've already saved this item", "", 1)
 
     def showFavourites(self, itemList):
-        """Display the saved products
+        """This function displays the saved products
 
         Args:
             itemList (treeview): the details of the saved products
@@ -234,7 +234,7 @@ class storageHandler:
             itemList.insert("", 0, values=(savedItem[i]))
 
     def deleteAllFavourites(self, itemList):
-        """Delete all saved products 
+        """This function deletes all saved products 
 
         Args:
             itemList (treeview): the details of the saved products
@@ -244,7 +244,7 @@ class storageHandler:
         itemList.delete(*itemList.get_children())
 
     def deleteFiles(self):
-        """Overwrite the csv files
+        """This function overwrites the csv files
         """
         with open('output-amazon.csv', 'w', newline='', encoding='utf-8') as f:
             pass
@@ -252,7 +252,7 @@ class storageHandler:
             pass
 
     def readReview(self, itemID, itemList):
-        """[summary]
+        """This function opens the csv file, reads and stores the reviews 
 
         Args:
             itemID (str): product ID
@@ -287,7 +287,7 @@ class storageHandler:
 
 
     def is_number(self, itemID):
-        """Check if product ID is float
+        """This function checks if product ID is float
 
         Args:
             itemID (str): product ID
@@ -303,7 +303,7 @@ class storageHandler:
         return True
 
     def readSentiment(self, itemID, itemList):
-        """Open csv file and read the data of sentiment analysis
+        """This function opens csv file and read the data of sentiment analysis
 
         Args:
             itemID (str): product ID
@@ -330,7 +330,7 @@ class storageHandler:
             itemList.insert("", 0, values=(sentimentItem[i]))
 
     def deleteSavedProduct(self, itemID, itemList):
-        """Open csv file, reads it, stores parameters into a list, if parameter itemID is equal to row of list, delete row from list and rewrite csv file. Remaining products will then be displayed.
+        """This function opens csv file, reads it, stores parameters into a list, if parameter itemID is equal to row of list, delete row from list and rewrite csv file. Remaining products will then be displayed.
 
         Args:
             itemID (str): product ID
@@ -357,6 +357,11 @@ class storageHandler:
             itemList.insert("", 0, values=(savedItems[i]))
 
     def openURL(self, selectedItem):
+        """This function opens the website directed to the specific item
+
+        Args:
+            selectedItem (treeview child): the detail of the selected product
+        """
 
         if "." in selectedItem[0]:
             url = 'https://shopee.sg/load-i.' + selectedItem[0]

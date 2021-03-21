@@ -10,13 +10,13 @@ class shopee_review_scraper:
                 'Accept-Language': 'en-US, en;q=0.5'})
 
     def __init__(self, link):
-        """User define parameters for storage purposes
+        """This function is for user define parameters for storage purposes
         """
         self.link = link
         self.reviews = [[],[],[],[],[]]
 
     def asynchronousProcessing(self):
-        """Aynsc function that waits scraps all the review of the selected product fron the GUI.
+        """This function waits and scraps all the review of the selected product fron the GUI.
                 asession : creates a html session for the scarping of data
                 NUMBER_OF_LAMBDA_FUNCTIONS : set the limit of request calls wanted per cycle 
         """
@@ -31,7 +31,7 @@ class shopee_review_scraper:
         )
 
     async def get_product_reviews(self, links, asession, rating):
-        """Scraps the link of the product that the user has specified and extract all the reviews from that particular link.
+        """This function scraps the link of the product that the user has specified and extract all the reviews from that particular link.
 
         Args:
             links ([Int]): Unique ID of the product.
@@ -64,7 +64,7 @@ class shopee_review_scraper:
                 self.reviews[rating - 1].append(review_str)
 
     def store_product_reviews(self):
-        """Stores all the details such as comment and stars including the product ID of the scraped review into a file. 
+        """This function stores all the details such as comment and stars including the product ID of the scraped review into a file. 
         """
         file_name = str('reviews/'+self.link + '.csv')
         fieldnames = ['Rating', 'Reviews']

@@ -14,7 +14,7 @@ class shopee_link_scraper(abstract_link_scraper):
     items_per_page = 50
 
     def linkSearch(self):
-        """extracts all the unique id from the URL which will be the product ID to scrape from.
+        """This function extracts all the unique id from the URL which will be the product ID to scrape from.
         
         """
         self.identificationParams = []
@@ -30,7 +30,7 @@ class shopee_link_scraper(abstract_link_scraper):
             self.identificationParams = []
 
     def storeUrl(self):
-        """Stores all the unique ID to a file into the specified directory
+        """This function stores all the unique ID to a file into the specified directory
 
         Returns:
             [String]: return the file name that the data is stored in.

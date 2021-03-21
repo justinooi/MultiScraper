@@ -3,14 +3,14 @@ import flair
 
 
 class Sentiment_Analysis:
-    """user define variable for storage purposes 
+    """This class is for the sentiment analysis of reviews, resulting to sentiment and confidence values 
     """
     sentiment = []
     confidence = []
     reviewID = ''
 
     def analyze(self, itemID):
-        """Analyzes reviews from the scraped review data and give a sentimental analysis of the review
+        """This function analyzes reviews from the scraped review data and give a sentimental analysis of the review
 
         Args:
             itemID ([int]): Unique product ID of the product that the user want to review analyze.
